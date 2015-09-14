@@ -3,114 +3,125 @@ App::uses('LoginsController', 'Controller');
 
 /**
  * LoginsController Test Case
- *
- */
-class LoginsControllerTest extends ControllerTestCase {
 
-/**
- * Fixtures
- *
- * @var array
  */
-	public $fixtures = array(
-		'app.login',
-		'app.user',
-		'app.group',
-		'app.task',
-		'app.contact',
-		'app.contact_type',
-		'app.city',
-		'app.state',
-		'app.business',
-		'app.business_type',
-		'app.doy',
-		'app.contract',
-		'app.contract_type',
-		'app.businesses_contact',
-		'app.department',
-		'app.task_status',
-		'app.task_priority',
-		'app.task_type'
-	);
+class LoginsControllerTest extends ControllerTestCase
+{
 
-/**
- * testIndex method
- *
- * @return void
- */
-	public function testIndex() {
-	}
+    /**
+     * Fixtures
+     *
+     * @var array
+     */
+    public $fixtures = array(
+        'app.login',
+        'app.user',
+        'app.group',
+        'app.task',
+        'app.contact',
+        'app.contact_type',
+        'app.city',
+        'app.state',
+        'app.business',
+        'app.business_type',
+        'app.doy',
+        'app.contract',
+        'app.contract_type',
+        'app.businesses_contact',
+        'app.department',
+        'app.task_status',
+        'app.task_priority',
+        'app.task_type'
+    );
 
-/**
- * testView method
- *
- * @return void
- */
-	public function testView() {
-	}
+    /**
+     * testIndex method
+     *
+     * @return void
+     */
+    public function testIndex()
+    {
+    }
 
-/**
- * testAdd method
- *
- * @return void
- */
-	public function testAdd() {
-	}
+    /**
+     * testView method
+     *
+     * @return void
+     */
+    public function testView()
+    {
+    }
 
-/**
- * testEdit method
- *
- * @return void
- */
-	public function testEdit() {
-	}
+    /**
+     * testAdd method
+     *
+     * @return void
+     */
+    public function testAdd()
+    {
+    }
 
-/**
- * testDelete method
- *
- * @return void
- */
-	public function testDelete() {
-	}
+    /**
+     * testEdit method
+     *
+     * @return void
+     */
+    public function testEdit()
+    {
+    }
 
-/**
- * testAdminIndex method
- *
- * @return void
- */
-	public function testAdminIndex() {
-	}
+    /**
+     * testDelete method
+     *
+     * @return void
+     */
+    public function testDelete()
+    {
+    }
 
-/**
- * testAdminView method
- *
- * @return void
- */
-	public function testAdminView() {
-	}
+    /**
+     * testAdminIndex method
+     *
+     * @return void
+     */
+    public function testAdminIndex()
+    {
+    }
 
-/**
- * testAdminAdd method
- *
- * @return void
- */
-	public function testAdminAdd() {
-	}
+    /**
+     * testAdminView method
+     *
+     * @return void
+     */
+    public function testAdminView()
+    {
+    }
 
-/**
- * testAdminEdit method
- *
- * @return void
- */
-	public function testAdminEdit() {
-	}
+    /**
+     * testAdminAdd method
+     *
+     * @return void
+     */
+    public function testAdminAdd()
+    {
+    }
 
-/**
- * testAdminDelete method
- *
- * @return void
- */
-	public function testAdminDelete() {
-	}
+    /**
+     * testAdminEdit method
+     *
+     * @return void
+     */
+    public function testAdminEdit()
+    {
+    }
+
+    /**
+     * testAdminDelete method
+     *
+     * @return void
+     */
+    public function testAdminDelete()
+    {
+    }
 
 }

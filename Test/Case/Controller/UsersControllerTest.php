@@ -3,157 +3,172 @@ App::uses('UsersController', 'Controller');
 
 /**
  * UsersController Test Case
- *
- */
-class UsersControllerTest extends ControllerTestCase {
 
-/**
- * Fixtures
- *
- * @var array
  */
-	public $fixtures = array(
-		'app.user',
-		'app.group',
-		'app.task',
-		'app.contact',
-		'app.contact_type',
-		'app.city',
-		'app.state',
-		'app.business',
-		'app.business_type',
-		'app.doy',
-		'app.contract',
-		'app.contract_type',
-		'app.business_contact',
-		'app.task_status',
-		'app.task_priority',
-		'app.task_type'
-	);
+class UsersControllerTest extends ControllerTestCase
+{
 
-/**
- * testIndex method
- *
- * @return void
- */
-	public function test_index() {
-            $this->testAction('users/index');
-	}
+    /**
+     * Fixtures
+     *
+     * @var array
+     */
+    public $fixtures = array(
+        'app.user',
+        'app.group',
+        'app.task',
+        'app.contact',
+        'app.contact_type',
+        'app.city',
+        'app.state',
+        'app.business',
+        'app.business_type',
+        'app.doy',
+        'app.contract',
+        'app.contract_type',
+        'app.business_contact',
+        'app.task_status',
+        'app.task_priority',
+        'app.task_type'
+    );
 
-/**
- * testView method
- *
- * @return void
- */
-	public function testView() {
-	}
+    /**
+     * testIndex method
+     *
+     * @return void
+     */
+    public function test_index()
+    {
+        $this->testAction('users/index');
+    }
 
-/**
- * testAdd method
- *
- * @return void
- */
-	public function testAdd() {
-	}
+    /**
+     * testView method
+     *
+     * @return void
+     */
+    public function testView()
+    {
+    }
 
-/**
- * testEdit method
- *
- * @return void
- */
-	public function testEdit() {
-	}
+    /**
+     * testAdd method
+     *
+     * @return void
+     */
+    public function testAdd()
+    {
+    }
 
-/**
- * testPersonal method
- *
- * @return void
- */
-	public function testPersonal() {
-	}
+    /**
+     * testEdit method
+     *
+     * @return void
+     */
+    public function testEdit()
+    {
+    }
 
-/**
- * testAdminIndex method
- *
- * @return void
- */
-	public function testAdminIndex() {
-	}
+    /**
+     * testPersonal method
+     *
+     * @return void
+     */
+    public function testPersonal()
+    {
+    }
 
-/**
- * testAdminView method
- *
- * @return void
- */
-	public function testAdminView() {
-	}
+    /**
+     * testAdminIndex method
+     *
+     * @return void
+     */
+    public function testAdminIndex()
+    {
+    }
 
-/**
- * testAdminAdd method
- *
- * @return void
- */
-	public function testAdminAdd() {
-	}
+    /**
+     * testAdminView method
+     *
+     * @return void
+     */
+    public function testAdminView()
+    {
+    }
 
-/**
- * testAdminEdit method
- *
- * @return void
- */
-	public function testAdminEdit() {
-	}
+    /**
+     * testAdminAdd method
+     *
+     * @return void
+     */
+    public function testAdminAdd()
+    {
+    }
 
-/**
- * testAdminDelete method
- *
- * @return void
- */
-	public function testAdminDelete() {
-	}
+    /**
+     * testAdminEdit method
+     *
+     * @return void
+     */
+    public function testAdminEdit()
+    {
+    }
 
-/**
- * testLogin method
- *
- * @return void
- */
-	public function testLogin() {
-	}
+    /**
+     * testAdminDelete method
+     *
+     * @return void
+     */
+    public function testAdminDelete()
+    {
+    }
 
-/**
- * testLogout method
- *
- * @return void
- */
-	public function testLogout() {
-	}
+    /**
+     * testLogin method
+     *
+     * @return void
+     */
+    public function testLogin()
+    {
+    }
 
-/**
- * testRegister method
- *
- * @return void
- */
-	public function testRegister() {
-	}
+    /**
+     * testLogout method
+     *
+     * @return void
+     */
+    public function testLogout()
+    {
+    }
 
-/**
- * testChangePassword method
- *
- * @return void
- */
-	public function test_change_password() {
-            $Users = $this->generate('Users', array(
-                'components' => array(
-                    'Session',
-                    'Auth' => array('user')
-                )
-            ));
-            
-            $Users->Auth->staticExpects($this->any())
-                ->method('user')
-                ->will($this->returnValue(1));
-            $this->testAction('users/change_password');
+    /**
+     * testRegister method
+     *
+     * @return void
+     */
+    public function testRegister()
+    {
+    }
 
-	}
+    /**
+     * testChangePassword method
+     *
+     * @return void
+     */
+    public function test_change_password()
+    {
+        $Users = $this->generate('Users', array(
+            'components' => array(
+                'Session',
+                'Auth' => array('user')
+            )
+        ));
+
+        $Users->Auth->staticExpects($this->any())
+            ->method('user')
+            ->will($this->returnValue(1));
+        $this->testAction('users/change_password');
+
+    }
 
 }
