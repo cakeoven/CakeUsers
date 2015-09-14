@@ -1,0 +1,39 @@
+# Created by .ignore support plugin (hsz.mobi)
+### Example user template template
+### Example user template
+
+# IntelliJ project files
+.idea
+*.iml
+out
+gen### NetBeans template
+nbproject/private/
+build/
+nbbuild/
+dist/
+nbdist/
+nbactions.xml
+nb-configuration.xml
+.nb-gradle/
+### Composer template
+composer.phar
+vendor/
+
+# Commit your application's lock file http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file
+# You may choose to ignore a library lock file http://getcomposer.org/doc/02-libraries.md#lock-file
+# composer.lock
+### CakePHP template
+# CakePHP 3
+
+/vendor/*
+/config/app.php
+/tmp/*
+/logs/*
+
+# CakePHP 2
+
+/app/tmp/*
+/app/Config/core.php
+/app/Config/database.php
+/vendors/*
+
