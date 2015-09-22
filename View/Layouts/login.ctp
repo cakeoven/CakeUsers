@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <?= $this->Html->charset(); ?>
+        <title>
+            <?= $title_for_layout; ?>
+        </title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <?= $this->Html->meta('icon'); ?>
+        <?= $this->Html->css('CakeBootstrap.bootstrap'); ?>
+        <?= $this->Html->css('CakeBootstrap.font-awesome'); ?>
+        <?= $this->Html->css('CakeBootstrap.chosen'); ?>
+        <?= $this->Html->css('CakeBootstrap.chosen-custom'); ?>
+    </head>
+    <body>
+        <div class="container-fluid">
+            <?= $this->Session->flash(); ?>
+            <div id="content">
+                <?= $this->fetch('content'); ?>
+            </div>
+        </div>
+        <?= $this->Html->script('CakeBootstrap.jquery', ['once' => true]); ?>
+        <?= $this->Html->script('CakeBootstrap.bootstrap', ['once' => true]); ?>
+        <?= $this->Html->script('CakeBootstrap.chosen', ['once' => true]); ?>
+        <?= $this->Html->script('CakeBootstrap.datepicker', ['once' => true]); ?>
+        <?= $this->Html->script('CakeBootstrap.functions', ['once' => true]); ?>
+    </body>
+</html>
