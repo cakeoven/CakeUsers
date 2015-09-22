@@ -13,11 +13,9 @@
         <?= $this->Html->css('CakeBootstrap.chosen-custom'); ?>
     </head>
     <body>
-        <div class="container-fluid">
+        <div class="container">
             <?= $this->Session->flash(); ?>
-            <div id="content">
-                <?= $this->fetch('content'); ?>
-            </div>
+            <?= $this->fetch('content'); ?>
         </div>
         <?= $this->Html->script('CakeBootstrap.jquery', ['once' => true]); ?>
         <?= $this->Html->script('CakeBootstrap.bootstrap', ['once' => true]); ?>

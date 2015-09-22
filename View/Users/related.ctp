@@ -13,7 +13,7 @@
             <tr>
                 <td><?php echo h($user['User']['username']); ?></td>
                 <td><?php echo $this->Html->link($user['Group']['name'],
-                        array('controller' => 'groups', 'action' => 'view', $user['Group']['id'])); ?></td>
+                        ['controller' => 'groups', 'action' => 'view', $user['Group']['id']]); ?></td>
                 <td><?php echo h($user['User']['firstname']); ?>&nbsp;</td>
                 <td><?php echo h($user['User']['lastname']); ?>&nbsp;</td>
                 <td><?php echo $this->Text->autoLinkEmails($user['User']['email']) ?></td>
