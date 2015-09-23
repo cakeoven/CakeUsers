@@ -10,6 +10,7 @@ App::uses('UsersAppModel', 'Users.Model');
  * @property DayOff $DayOff
  * @package    Plugins
  * @subpackage Users.Models
+ * @method findByEmail($email)
  */
 class User extends UsersAppModel
 {
@@ -33,11 +34,11 @@ class User extends UsersAppModel
      *
      * @var array
      */
-    public $actsAs = array(
-        'Acl' => array(
-            'type' => 'requester'
-        )
-    );
+    public $actsAs = [
+        'Acl' => [
+            'type' => 'requester',
+        ],
+    ];
 
     /**
      * Display field
@@ -58,140 +59,140 @@ class User extends UsersAppModel
      *
      * @var array
      */
-    public $validate = array(
-        'username' => array(
-            'notEmpty' => array(
-                'rule' => array('notEmpty'),
-            ),
-            'unique' => array(
-                'rule' => array('isUnique', 'username'),
-                'message' => 'This username is already in use.'
-            ),
-            'alpha' => array(
-                'rule' => array('alphaNumeric'),
-                'message' => 'The username must be alphanumeric.'
-            ),
-        ),
-        'password' => array(
-            'notEmpty' => array(
-                'rule' => array('notEmpty'),
-            ),
-            'too_short' => array(
-                'rule' => array('minLength', '6'),
-                'message' => 'The password must have at least 6 characters.'
-            ),
-        ),
-        'firstname' => array(
-            'notempty' => array(
-                'rule' => array('notempty'),
-            ),
-            'alpha' => array(
-                'rule' => array('alphaNumeric'),
-                'message' => 'The firstname must be alphanumeric.'
-            ),
-        ),
-        'lastname' => array(
-            'notempty' => array(
-                'rule' => array('notempty'),
-            ),
-            'alpha' => array(
-                'rule' => array('alphaNumeric'),
-                'message' => 'The lastname must be alphanumeric.'
-            ),
-        ),
-        'email' => array(
-            'email' => array(
-                'rule' => array('email'),
-            ),
-            'isUnique' => array(
-                'rule' => array('isUnique'),
-                'message' => 'This email is already in use.'
-            ),
-        ),
-        'token_email_expires' => array(
-            'email' => array(
-                'rule' => array('email'),
-            ),
-            'isUnique' => array(
-                'rule' => array('isUnique'),
-                'message' => 'This email is already in use.'
-            ),
-        ),
-        'new_password' => array(
-            'too_short' => array(
-                'rule' => array('minLength', '6'),
-                'message' => 'The password must have at least 6 characters.'
-            ),
-            'diffOldPassword' => array(
-                'rule' => array('compareFieldsDiff', 'old_password', 'new_password'),
-                'message' => 'The new password must be different from the old'
-            )
-        ),
-        'old_password' => array(
-            'validateOldPassword' => array(
+    public $validate = [
+        'username' => [
+            'notEmpty' => [
+                'rule' => ['notEmpty'],
+            ],
+            'unique' => [
+                'rule' => ['isUnique', 'username'],
+                'message' => 'This username is already in use.',
+            ],
+            'alpha' => [
+                'rule' => ['alphaNumeric'],
+                'message' => 'The username must be alphanumeric.',
+            ],
+        ],
+        'password' => [
+            'notEmpty' => [
+                'rule' => ['notEmpty'],
+            ],
+            'too_short' => [
+                'rule' => ['minLength', '6'],
+                'message' => 'The password must have at least 6 characters.',
+            ],
+        ],
+        'firstname' => [
+            'notempty' => [
+                'rule' => ['notempty'],
+            ],
+            'alpha' => [
+                'rule' => ['alphaNumeric'],
+                'message' => 'The firstname must be alphanumeric.',
+            ],
+        ],
+        'lastname' => [
+            'notempty' => [
+                'rule' => ['notempty'],
+            ],
+            'alpha' => [
+                'rule' => ['alphaNumeric'],
+                'message' => 'The lastname must be alphanumeric.',
+            ],
+        ],
+        'email' => [
+            'email' => [
+                'rule' => ['email'],
+            ],
+            'isUnique' => [
+                'rule' => ['isUnique'],
+                'message' => 'This email is already in use.',
+            ],
+        ],
+        'token_email_expires' => [
+            'email' => [
+                'rule' => ['email'],
+            ],
+            'isUnique' => [
+                'rule' => ['isUnique'],
+                'message' => 'This email is already in use.',
+            ],
+        ],
+        'new_password' => [
+            'too_short' => [
+                'rule' => ['minLength', '6'],
+                'message' => 'The password must have at least 6 characters.',
+            ],
+            'diffOldPassword' => [
+                'rule' => ['compareFieldsDiff', 'old_password', 'new_password'],
+                'message' => 'The new password must be different from the old',
+            ],
+        ],
+        'old_password' => [
+            'validateOldPassword' => [
                 'rule' => 'validatePassword',
                 'message' => 'Invalid password',
-            )
-        ),
-        'verify_password' => array(
-            'required' => array(
-                'rule' => array('compareFields', 'new_password', 'verify_password'),
+            ],
+        ],
+        'verify_password' => [
+            'required' => [
+                'rule' => ['compareFields', 'new_password', 'verify_password'],
                 'message' => 'The passwords are not equal.',
-            ),
-        ),
-    );
+            ],
+        ],
+    ];
 
     /**
      * belongsTo associations
      *
      * @var array
      */
-    public $belongsTo = array(
-        'Group' => array(
+    public $belongsTo = [
+        'Group' => [
             'className' => 'Users.Group',
             'foreignKey' => 'group_id',
             'conditions' => '',
             'fields' => '',
-            'order' => ''
-        ),
-        'BankAccount' => array(
+            'order' => '',
+        ],
+        'BankAccount' => [
             'className' => 'BankAccount',
             'foreignKey' => 'bank_account_id',
-            'dependent' => false
-        )
-    );
+            'dependent' => false,
+        ],
+    ];
 
     /**
      * hasOne associations
      *
      * @var type
      */
-    public $hasOne = array();
+    public $hasOne = [];
 
     /**
      * hasMany associations
      *
      * @var array
      */
-    public $hasMany = array(
-        'Task' => array(
+    public $hasMany = [
+        'Task' => [
             'className' => 'Task',
             'foreignKey' => 'responsible_user_id',
             'dependent' => false,
             'conditions' => '',
             'fields' => '',
-            'order' => array(
+            'order' => [
                 'ISNULL(Task.completed) DESC',
                 'Task.completed DESC',
                 'Task.created DESC',
-            ),
+            ],
             'limit' => '',
             'offset' => '',
             'exclusive' => '',
             'finderQuery' => '',
-            'counterQuery' => ''
-        ),
-        'Login' => array(
+            'counterQuery' => '',
+        ],
+        'Login' => [
             'className' => 'Login',
             'foreignKey' => 'user_id',
             'dependent' => true,
@@ -202,9 +203,9 @@ class User extends UsersAppModel
             'offset' => '',
             'exclusive' => true,
             'finderQuery' => '',
-            'counterQuery' => ''
-        ),
-        'DayOff' => array(
+            'counterQuery' => '',
+        ],
+        'DayOff' => [
             'className' => 'DayOff',
             'foreignKey' => 'user_id',
             'dependent' => false,
@@ -215,9 +216,9 @@ class User extends UsersAppModel
             'offset' => '',
             'exclusive' => '',
             'finderQuery' => '',
-            'counterQuery' => ''
-        ),
-        'Event' => array(
+            'counterQuery' => '',
+        ],
+        'Event' => [
             'className' => 'Calendar.Event',
             'foreignKey' => 'user_id',
             'dependent' => false,
@@ -228,9 +229,9 @@ class User extends UsersAppModel
             'offset' => '',
             'exclusive' => '',
             'finderQuery' => '',
-            'counterQuery' => ''
-        )
-    );
+            'counterQuery' => '',
+        ],
+    ];
 
     /**
      * We need to create the virtual fields in construct method
@@ -240,7 +241,7 @@ class User extends UsersAppModel
     {
         parent::__construct($id, $table, $ds);
         $alias = $this->alias;
-        $this->virtualFields = array(
+        $this->virtualFields = [
             'fullname' => "CONCAT($alias.lastname, ' ', $alias.firstname)",
             'shortname' => "CONCAT($alias.lastname, ' ', LEFT($alias.firstname, 1),'.')",
             'phones' => "TRIM(CONCAT($alias.phone, ' ', $alias.cellphone))",
@@ -248,7 +249,7 @@ class User extends UsersAppModel
             'time_updated' => "DATE_FORMAT($alias.updated, '%H:%i')",
             'date_created' => "DATE_FORMAT($alias.created, '%Y-%m-%d')",
             'date_updated' => "DATE_FORMAT($alias.updated, '%Y-%m-%d')",
-        );
+        ];
     }
 
     /**
@@ -269,7 +270,7 @@ class User extends UsersAppModel
         if (!$groupId) {
             return null;
         } else {
-            return array('Users.Group' => array('id' => $groupId));
+            return ['Users.Group' => ['id' => $groupId]];
         }
     }
 
@@ -282,7 +283,7 @@ class User extends UsersAppModel
      */
     public function bindNode($user)
     {
-        return array('model' => 'Users.Group', 'foreign_key' => $user['Users.User']['group_id']);
+        return ['model' => 'Users.Group', 'foreign_key' => $user['Users.User']['group_id']];
     }
 
     /**
@@ -291,15 +292,15 @@ class User extends UsersAppModel
      * @param array $data Post data from controller
      * @return boolean True on success
      */
-    public function changePassword($data = array())
+    public function changePassword($data = [])
     {
         $this->set($data);
         if ($this->validates()) {
             $this->data[$this->alias]['password'] = $this->hash($this->data[$this->alias]['new_password']);
-            $this->save($data, array(
+            $this->save($data, [
                 'validate' => false,
-                'callbacks' => false
-            ));
+                'callbacks' => false,
+            ]);
             return true;
         }
         return false;
@@ -333,7 +334,8 @@ class User extends UsersAppModel
     /**
      * verify the password of the current record
      *
-     * @param string $token
+     * @param string $password
+     * @throws Exception
      * @return boolean
      */
     public function verifyPassword($password)
@@ -455,7 +457,7 @@ class User extends UsersAppModel
      * @param array $options
      * @return boolean
      */
-    public function beforeSave($options = array())
+    public function beforeSave($options = [])
     {
         if (isset($this->data['User']['id'])) {
             if (!isset($this->data['User']['password'])) {
@@ -483,13 +485,13 @@ class User extends UsersAppModel
      */
     public function beforeRegister()
     {
-        $data = array();
+        $data = [];
         $data['User']['token'] = $this->generateToken();
         $data['User']['token_expires'] = $this->tokenExpirationTime();
         $data['User']['token_email'] = $this->generateToken();
         $data['User']['token_email_expires'] = $this->tokenExpirationTime();
         if (!isset($this->data['User']['group_id'])) {
-            $data['User']['group_id'] = $this->Group->field('Group.id', array('name' => 'user'));
+            $data['User']['group_id'] = $this->Group->field('Group.id', ['name' => 'user']);
         }
         $this->data = array_merge_recursive($this->data, $data);
     }
@@ -499,7 +501,7 @@ class User extends UsersAppModel
      *
      * @param array $data
      */
-    public function afterLogin($data = array(), $options = array())
+    public function afterLogin($data = [], $options = [])
     {
         $this->Login->create();
         if (!$this->Login->save($data)) {

@@ -1,7 +1,7 @@
 <?php $this->layout = 'login'; ?>
 <?= $this->Html->pageHeader(__('Login'), 'h3'); ?>
 <div class="row">
-    <div class="col-sm-5 col-md-3 col-lg-2">
+    <div class="col-sm-4">
         <div class="list-group">
             <?= $this->Html->link(__('Register'), ['action' => 'register'],
                 ['class' => 'list-group-item']); ?>
@@ -11,7 +11,7 @@
                 ['admin' => false, 'action' => 'confirmResend'], ['class' => 'list-group-item']); ?>
         </div>
     </div>
-    <div class="col-sm-7 col-md-9 col-lg-10">
+    <div class="col-sm-8">
         <div class="well well-lg">
             <?php
             echo $this->Form->create('User');

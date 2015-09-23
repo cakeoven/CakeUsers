@@ -13,11 +13,11 @@ echo "\n";
 echo __d('users', 'to validate your account, you must visit the URL below within 24 hours');
 echo "\n";
 echo Router::url(
-    array(
+    [
         'admin' => false,
         'controller' => 'users',
         'action' => 'verify',
         $user['User']['id'],
-        $user['User']['email_token']
-    ), true
+        $user['User']['email_token'],
+    ], true
 );

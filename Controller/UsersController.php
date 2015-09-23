@@ -34,17 +34,17 @@ class UsersController extends UsersAppController
      *
      * @return void
      */
-    protected function _paginate($scope = array())
+    protected function _paginate($scope = [])
     {
-        $whitelist = array(
-            'User.username'
-        );
-        $this->Paginator->settings = array(
-            'conditions' => array(
+        $whitelist = [
+            'User.username',
+        ];
+        $this->Paginator->settings = [
+            'conditions' => [
                 $this->modelClass . '.active' => 1,
-                $this->modelClass . '.verified' => 1
-            )
-        );
+                $this->modelClass . '.verified' => 1,
+            ],
+        ];
         $this->User->recursive = 0;
         return $this->Paginator->paginate('User', $scope, $whitelist);
     }
@@ -56,16 +56,16 @@ class UsersController extends UsersAppController
      *
      * @return void
      */
-    protected function _admin_paginate($scope = array())
+    protected function _admin_paginate($scope = [])
     {
-        $whitelist = array(
-            'User.username'
-        );
-        $this->Paginator->settings = array(
-            'order' => array(
-                $this->modelClass . '.created' => 'desc'
-            ),
-        );
+        $whitelist = [
+            'User.username',
+        ];
+        $this->Paginator->settings = [
+            'order' => [
+                $this->modelClass . '.created' => 'desc',
+            ],
+        ];
         $this->User->recursive = 0;
         return $this->Paginator->paginate('User', $scope, $whitelist);
     }
@@ -106,7 +106,7 @@ class UsersController extends UsersAppController
         if (empty($query)) {
             throw new NotFoundException('No Parameters');
         }
-        $this->set('users', $this->User->find('all', array('conditions' => $query)));
+        $this->set('users', $this->User->find('all', ['conditions' => $query]));
     }
 
     /**
@@ -124,7 +124,7 @@ class UsersController extends UsersAppController
         }
         if ($this->request->is('post') || $this->request->is('put')) {
             if ($this->User->save($this->request->data)) {
-                return $this->redirect(array('action' => 'index'));
+                return $this->redirect(['action' => 'index']);
             } else {
                 $this->Session->setFlash(__('The user could not be saved. Please, try again.'));
             }
@@ -171,7 +171,7 @@ class UsersController extends UsersAppController
             $this->User->create();
             debug($this->request->data);
             if ($this->User->save($this->request->data)) {
-                $this->redirect(array('action' => 'index'));
+                $this->redirect(['action' => 'index']);
             } else {
                 $this->Session->setFlash(__('The user could not be saved. Please, try again.'));
             }
@@ -195,7 +195,7 @@ class UsersController extends UsersAppController
         }
         if ($this->request->is('post') || $this->request->is('put')) {
             if ($this->User->save($this->request->data)) {
-                return $this->redirect(array('action' => 'index'));
+                return $this->redirect(['action' => 'index']);
             } else {
                 $this->Session->setFlash(__('The user could not be saved. Please, try again.'));
             }
@@ -218,7 +218,7 @@ class UsersController extends UsersAppController
      */
     public function admin_delete($id = null)
     {
-        $this->request->onlyAllow('post', 'delete');
+        $this->request->allowMethod('post', 'delete');
         $this->User->id = $id;
         if (!$this->User->exists()) {
             throw new NotFoundException(__('Invalid user'));
@@ -229,7 +229,7 @@ class UsersController extends UsersAppController
         if ($this->request->is('ajax')) {
             return $this->redirect($this->referer());
         }
-        return $this->redirect(array('action' => 'index'));
+        return $this->redirect(['action' => 'index']);
     }
 
     /**
@@ -241,12 +241,11 @@ class UsersController extends UsersAppController
         if (empty($query)) {
             throw new NotFoundException('No Parameters');
         }
-        $this->set('users', $this->User->find('all', array('conditions' => $query)));
+        $this->set('users', $this->User->find('all', ['conditions' => $query]));
     }
 
     /**
      * login method
-
      */
     public function login()
     {
@@ -276,15 +275,14 @@ class UsersController extends UsersAppController
         $user = $this->Auth->user();
         $this->Session->destroy();
         $this->Session->setFlash(sprintf(__('%s you have successfully logged out'), $user[$this->User->displayField]),
-            'alert', array(
-                'class' => 'alert-info'
-            ));
+            'alert', [
+                'class' => 'alert-info',
+            ]);
         $this->redirect($this->Auth->logout());
     }
 
     /**
      * register method
-
      */
     public function register()
     {
@@ -294,7 +292,7 @@ class UsersController extends UsersAppController
                 $user = $this->User->findById($this->User->getLastInsertID());
                 $this->_sendConfirmEmail($user);
                 $this->Session->setFlash(__('The registration was successfull. Check your email to confirm your account'));
-                return $this->redirect(array('action' => 'index'));
+                return $this->redirect(['action' => 'index']);
             } else {
                 $this->Session->setFlash(__('The user could not be registered. Please, try again.'));
             }
@@ -321,21 +319,26 @@ class UsersController extends UsersAppController
     }
 
     /**
-     * Resends the email for the user to verify it account
-
-
+     * Resend the email for the user to verify it account
      */
     public function confirmResend()
     {
         if ($this->request->is('post')) {
             $email = $this->request->data['User']['email'];
             $user = $this->User->findByEmail($email);
+
             if (empty($user)) {
                 $this->Session->setFlash(sprintf(__('There is no user with %s email'), $email));
-            } else {
-                $this->_sendConfirmEmail($user);
-                $this->Session->setFlash(__('You have 24 hours to confirm your account'));
+                return;
             }
+
+            if ($user['User']['verified'] == true) {
+                $this->Session->setFlash(sprintf(__('The user with email %s is already verified'), $email));
+                return;
+            }
+
+            $this->_sendConfirmEmail($user);
+            $this->Session->setFlash(__('You have 24 hours to confirm your account'));
         }
     }
 
@@ -356,10 +359,10 @@ class UsersController extends UsersAppController
         if ($this->request->is('post')) {
             if (!$this->User->verifyToken($token)) {
                 $this->Session->setFlash(__('The user token is incorect.The password is not saved.'));
-                return $this->redirect(array('action' => 'index'));
+                return $this->redirect(['action' => 'index']);
             }
             if ($this->User->changePassword($this->request->data)) {
-                return $this->redirect(array('action' => 'index'));
+                return $this->redirect(['action' => 'index']);
             } else {
                 $this->Session->setFlash(__('The user password could not be changed. Please, try again.'));
             }
@@ -386,7 +389,7 @@ class UsersController extends UsersAppController
                 $this->User->set($user);
                 $this->User->saveField('token_email_expires', $time);
                 $this->Session->setFlash(__('You have 24 hours to reset your password'));
-                return $this->redirect(array('action' => 'login'));
+                return $this->redirect(['action' => 'login']);
             }
         }
     }
@@ -409,7 +412,7 @@ class UsersController extends UsersAppController
         }
         if ($this->request->is('post')) {
             $this->User->savePassword($this->request->data['User']['password']);
-            return $this->redirect(array('action' => 'login'));
+            return $this->redirect(['action' => 'login']);
         }
         $this->set('token', $emailToken);
         $this->set('id', $id);
@@ -460,10 +463,9 @@ class UsersController extends UsersAppController
     /**
      * _sendRegisterEmail method
      *
-     * @param type $data
-     * @param type $options
+     * @param array $user
      */
-    protected function _sendConfirmEmail($user = array())
+    protected function _sendConfirmEmail($user = [])
     {
         $this->Email->subject = sprintf(__('Welcome %s to CRM'), $user['User']['fullname']);
         $this->Email->template = 'users/confirm';
@@ -478,7 +480,7 @@ class UsersController extends UsersAppController
      * @param type $data
      * @param type $options
      */
-    protected function _sendResetPasswordEmail($user = array())
+    protected function _sendResetPasswordEmail($user = [])
     {
         $this->Email->subject = sprintf(__('Reset password %s'), $user['User']['fullname']);
         $this->Email->template = 'users/reset_password';

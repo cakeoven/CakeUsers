@@ -1,5 +1,5 @@
-<?php $this->Html->addCrumb($this->Html->link(__('Groups'), array('action' => 'index'),
-    array('icon' => array('class' => 'icon icon-users icon-fw')))); ?>
+<?php $this->Html->addCrumb($this->Html->link(__('Groups'), ['action' => 'index'],
+    ['icon' => ['class' => 'icon icon-users icon-fw']])); ?>
 <?php $this->Html->addCrumb(__('Create')); ?>
 <?php echo $this->Form->create('Group'); ?>
     <div class="row">
@@ -8,7 +8,7 @@
                 <?php echo $this->Html->panelHeader(__('Add Group')); ?>
                 <div class="panel-body">
                     <?php echo $this->Form->input('name'); ?>
-                    <?php echo $this->Form->input('comments', array('rows' => 5, 'placeholder' => false)); ?>
+                    <?php echo $this->Form->input('comments', ['rows' => 5, 'placeholder' => false]); ?>
                 </div>
                 <div class="panel-footer">
                     <?php echo $this->Form->btnSubmit(); ?>

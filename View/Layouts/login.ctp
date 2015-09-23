@@ -11,11 +11,15 @@
         <?= $this->Html->css('CakeBootstrap.font-awesome'); ?>
         <?= $this->Html->css('CakeBootstrap.chosen'); ?>
         <?= $this->Html->css('CakeBootstrap.chosen-custom'); ?>
+        <?= $this->Html->css('Users.login'); ?>
     </head>
     <body>
-        <div class="container">
-            <?= $this->Session->flash(); ?>
-            <?= $this->fetch('content'); ?>
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3">
+                <?= $this->Session->flash(); ?>
+                <?= $this->fetch('content'); ?>
+                <?= $this->element('footer'); ?>
+            </div>
         </div>
         <?= $this->Html->script('CakeBootstrap.jquery', ['once' => true]); ?>
         <?= $this->Html->script('CakeBootstrap.bootstrap', ['once' => true]); ?>

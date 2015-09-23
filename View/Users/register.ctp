@@ -1,30 +1,28 @@
-<?php $this->layout = 'pages'; ?>
-<?php echo $this->Html->pageHeader(__('Register'), 'h3') ?>
+<?php $this->layout = 'login'; ?>
+<?= $this->Html->pageHeader(__('Register'), 'h3') ?>
 <div class="row">
-    <div class="col-sm-5 col-md-4">
+    <div class="col-sm-4">
         <div class="list-group">
-            <?php echo $this->Html->link(__('Login'), array('admin' => false, 'action' => 'login'),
-                array('class' => 'list-group-item')); ?>
-            <?php echo $this->Html->link(__('Reset password'), array('admin' => false, 'action' => 'resetPassword'),
-                array('class' => 'list-group-item')); ?>
-            <?php echo $this->Html->link(__('Resend confirmation'),
-                array('admin' => false, 'action' => 'confirmResend'), array('class' => 'list-group-item')); ?>
+            <?= $this->Html->link(__('Login'), ['admin' => false, 'action' => 'login'],
+                ['class' => 'list-group-item']); ?>
+            <?= $this->Html->link(__('Reset password'), ['admin' => false, 'action' => 'resetPassword'],
+                ['class' => 'list-group-item']); ?>
+            <?= $this->Html->link(__('Resend confirmation'),
+                ['admin' => false, 'action' => 'confirmResend'], ['class' => 'list-group-item']); ?>
         </div>
     </div>
-    <div class="col-sm-7 col-md-8">
+    <div class="col-sm-8">
         <div class="well">
-            <?php echo $this->Form->create('User', array('autocomplete' => 'off')); ?>
-            <?php
-            echo $this->Form->input('username', array('placeholder' => false));
-            echo $this->Form->input('email', array('placeholder' => false));
-            echo $this->Form->input('password', array('placeholder' => false));
-            echo $this->Form->input('firstname', array('placeholder' => false));
-            echo $this->Form->input('lastname', array('placeholder' => false));
-            ?>
-            <?php echo $this->Form->input('phone', array('placeholder' => false)); ?>
-            <?php echo $this->Form->input('cellphone', array('placeholder' => false)); ?>
-            <?php echo $this->Form->btnSubmit(__('Register')); ?>
-            <?php echo $this->Form->end(); ?>
+            <?= $this->Form->create('User', ['autocomplete' => 'off']); ?>
+            <?= $this->Form->input('username', ['placeholder' => false]); ?>
+            <?= $this->Form->input('email', ['placeholder' => false]); ?>
+            <?= $this->Form->input('password', ['placeholder' => false]); ?>
+            <?= $this->Form->input('firstname', ['placeholder' => false]); ?>
+            <?= $this->Form->input('lastname', ['placeholder' => false]); ?>
+            <?= $this->Form->input('phone', ['placeholder' => false]); ?>
+            <?= $this->Form->input('cellphone', ['placeholder' => false]); ?>
+            <?= $this->Form->btnSubmit(__('Register')); ?>
+            <?= $this->Form->end(); ?>
         </div>
     </div>
 </div>
