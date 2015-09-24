@@ -5,6 +5,8 @@
         <div class="list-group">
             <?php echo $this->Html->link(__('Login'), ['admin' => false, 'action' => 'login'],
                 ['class' => 'list-group-item']); ?>
+            <?php echo $this->Html->link(__('Register'), ['admin' => false, 'action' => 'register'],
+                ['class' => 'list-group-item']); ?>
             <?php echo $this->Html->link(__('Reset password'), ['admin' => false, 'action' => 'resetPassword'],
                 ['class' => 'list-group-item']); ?>
             <?php echo $this->Html->link(__('Resend confirmation'),

@@ -14,11 +14,13 @@
         <?= $this->Html->css('Users.login'); ?>
     </head>
     <body>
-        <div class="row">
-            <div class="col-md-6 col-md-offset-3">
-                <?= $this->Session->flash(); ?>
-                <?= $this->fetch('content'); ?>
-                <?= $this->element('footer'); ?>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3">
+                    <?= $this->Session->flash(); ?>
+                    <?= $this->fetch('content'); ?>
+                    <?= $this->element('footer'); ?>
+                </div>
             </div>
         </div>
         <?= $this->Html->script('CakeBootstrap.jquery', ['once' => true]); ?>

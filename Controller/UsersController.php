@@ -6,6 +6,7 @@ App::uses('UsersAppController', 'Users.Controller');
 /**
  * Users Controller
  *
+ * @todo           set dynamically the alerts
  * @property    User $User
  * @package        Plugins
  * @subpackage     Users.Controllers
@@ -32,6 +33,7 @@ class UsersController extends UsersAppController
      * Override this method or the index action directly if you want to change
      * pagination settings.
      *
+     * @param array $scope
      * @return void
      */
     protected function _paginate($scope = [])
@@ -54,6 +56,7 @@ class UsersController extends UsersAppController
      * Override this method or the index() action directly if you want to change
      * pagination settings. admin_index()
      *
+     * @param array $scope
      * @return void
      */
     protected function _admin_paginate($scope = [])
@@ -244,6 +247,198 @@ class UsersController extends UsersAppController
         $this->set('users', $this->User->find('all', ['conditions' => $query]));
     }
 
+
+    /**
+     * register method
+     */
+    public function register()
+    {
+        if ($this->request->is('post')) {
+            $this->User->create();
+            if ($this->User->save($this->request->data)) {
+                $user = $this->User->findById($this->User->getLastInsertID());
+                $this->_sendConfirmEmail($user);
+                $this->Session->setFlash(__('The registration was successful. Check your email to confirm your account'));
+                return $this->redirect(['action' => 'index']);
+            } else {
+                $this->Session->setFlash(__('The user could not be registered. Please, try again.'));
+            }
+        }
+    }
+
+    /**
+     * confirm account
+     *
+     * @param int    $id
+     * @param string $emailToken
+     * @return void
+     */
+    public function confirm($id, $emailToken)
+    {
+        $this->User->id = $id;
+        if (!$this->User->exists()) {
+            throw new NotFoundException(__('Invalid user'));
+        }
+        if ($this->User->verifyEmailToken($emailToken)) {
+            $this->User->saveField('active', true);
+            $this->User->saveField('verified', true);
+        }
+    }
+
+    /**
+     * Resend the email for the user to verify it account
+     */
+    public function confirmResend()
+    {
+        if ($this->request->is('post')) {
+            $email = $this->request->data['User']['email'];
+            $user = $this->User->findByEmail($email);
+
+            if (empty($user)) {
+                $this->Session->setFlash(
+                    sprintf(__('There is no user with %s email'), $email),
+                    'CakeBootstrap.alert_danger'
+                );
+                return;
+            }
+
+            if ($user['User']['verified'] == true) {
+                $this->Session->setFlash(
+                    sprintf(__('The user with email %s is already verified'), $email),
+                    'CakeBootstrap.alert_danger'
+                );
+                return;
+            }
+
+            if (!$this->User->verifyEmailToken($user['User']['token_email'])) {
+                $this->Session->setFlash(
+                    __('Confirmation email can not be resend for technical issues. Please contact admin'),
+                    'CakeBootstrap.alert_danger'
+                );
+                return;
+            }
+            $this->_sendConfirmEmail($user);
+            $this->Session->setFlash(__('You have 24 hours to confirm your account'), 'CakeBootstrap.alert_success');
+        }
+    }
+
+    /**
+     * Used for logged in user to change their password.
+     *
+     * @param int    $id
+     * @param string $token
+     * @return void
+     * @throws NotFoundException
+     */
+    public function changePassword($id, $token = null)
+    {
+        $this->User->id = $this->Auth->user('id');
+        if (!$this->User->exists()) {
+            throw new NotFoundException(__('Invalid user'));
+        }
+        if ($this->request->is('post')) {
+            if (!$this->User->verifyToken($token)) {
+                $this->Session->setFlash(__('The user token is incorrect.The password is not saved.'));
+                return $this->redirect(['action' => 'index']);
+            }
+            if ($this->User->changePassword($this->request->data)) {
+                return $this->redirect(['action' => 'index']);
+            } else {
+                $this->Session->setFlash(__('The user password could not be changed. Please, try again.'));
+            }
+        }
+        $this->set('token', $this->User->field('token'));
+        $this->set('id', $id);
+    }
+
+    /**
+     * Reset password for users that are not logged in
+     *
+     * @return null
+     */
+    public function resetPassword()
+    {
+        if ($this->request->is('post')) {
+            $email = $this->request->data['User']['email'];
+            $user = $this->User->findByEmail($email);
+            if (empty($user)) {
+                $this->Session->setFlash(sprintf(__('There is no user with %s email'), $email));
+            } else {
+                $this->_sendResetPasswordEmail($user);
+                $time = $this->User->tokenExpirationTime();
+                $this->User->set($user);
+                $this->User->saveField('token_email_expires', $time);
+                $this->Session->setFlash(__('You have 24 hours to reset your password'), 'alert_success');
+                return $this->redirect(['action' => 'login']);
+            }
+        }
+    }
+
+    /**
+     * New password
+     *
+     * @param int    $id
+     * @param string $emailToken
+     * @throws NotFoundException
+     */
+    public function newPassword($id, $emailToken)
+    {
+        $this->User->id = $id;
+        if (!$this->User->exists()) {
+            throw new NotFoundException(__('Invalid user'));
+        }
+        if (!$this->User->verifyEmailToken($emailToken)) {
+            throw new NotFoundException(__('The page you are trying to show is invalid'));
+        }
+        if ($this->request->is('post')) {
+            $this->User->savePassword($this->request->data['User']['password']);
+            return $this->redirect(['action' => 'login']);
+        }
+        $this->set('token', $emailToken);
+        $this->set('id', $id);
+    }
+
+    /**
+     * Renew the expiration date of token
+     *
+     * @param int $id
+     * @return null
+     * @throws NotFoundException
+     */
+    public function admin_renewToken($id = null)
+    {
+        $this->User->id = $id;
+        if (!$this->User->exists()) {
+            throw new NotFoundException(__('Invalid user'));
+        }
+        if ($this->User->renewToken()) {
+            $this->Session->setFlash(__('The token expires in 24 hours.'), 'CakeBootstrap.alert_success');
+        } else {
+            $this->Session->setFlash(__('The token could not be updated'), 'CakeBootstrap.alert_danger');
+        }
+        return $this->redirect($this->referer());
+    }
+
+    /**
+     * Renew the expiration date of email token
+     *
+     * @param int $id
+     * @throws NotFoundException
+     */
+    public function admin_renewTokenEmail($id = null)
+    {
+        $this->User->id = $id;
+        if (!$this->User->exists()) {
+            throw new NotFoundException(__('Invalid user'));
+        }
+        if ($this->User->renewTokenEmail()) {
+            $this->Session->setFlash(__('The token email expires in 24 hours.'), 'CakeBootstrap.alert_success');
+        } else {
+            $this->Session->setFlash(__('The token email could not be updated'), 'CakeBootstrap.alert_danger');
+        }
+        $this->redirect($this->referer());
+    }
+
     /**
      * login method
      */
@@ -274,190 +469,11 @@ class UsersController extends UsersAppController
     {
         $user = $this->Auth->user();
         $this->Session->destroy();
-        $this->Session->setFlash(sprintf(__('%s you have successfully logged out'), $user[$this->User->displayField]),
-            'alert', [
-                'class' => 'alert-info',
-            ]);
+        $this->Session->setFlash(
+            sprintf(__('%s you have successfully logged out'), $user[$this->User->displayField]),
+            'CakeBootstrap.alert_warning'
+        );
         $this->redirect($this->Auth->logout());
-    }
-
-    /**
-     * register method
-     */
-    public function register()
-    {
-        if ($this->request->is('post')) {
-            $this->User->create();
-            if ($this->User->save($this->request->data)) {
-                $user = $this->User->findById($this->User->getLastInsertID());
-                $this->_sendConfirmEmail($user);
-                $this->Session->setFlash(__('The registration was successfull. Check your email to confirm your account'));
-                return $this->redirect(['action' => 'index']);
-            } else {
-                $this->Session->setFlash(__('The user could not be registered. Please, try again.'));
-            }
-        }
-    }
-
-    /**
-     * confirm account
-     *
-     * @param type $id
-     * @param type $emailToken
-     * @return void
-     */
-    public function confirm($id, $emailToken)
-    {
-        $this->User->id = $id;
-        if (!$this->User->exists()) {
-            throw new NotFoundException(__('Invalid user'));
-        }
-        if ($this->User->verifyEmailToken($emailToken)) {
-            $this->User->saveField('active', true);
-            $this->User->saveField('verified', true);
-        }
-    }
-
-    /**
-     * Resend the email for the user to verify it account
-     */
-    public function confirmResend()
-    {
-        if ($this->request->is('post')) {
-            $email = $this->request->data['User']['email'];
-            $user = $this->User->findByEmail($email);
-
-            if (empty($user)) {
-                $this->Session->setFlash(sprintf(__('There is no user with %s email'), $email));
-                return;
-            }
-
-            if ($user['User']['verified'] == true) {
-                $this->Session->setFlash(sprintf(__('The user with email %s is already verified'), $email));
-                return;
-            }
-
-            $this->_sendConfirmEmail($user);
-            $this->Session->setFlash(__('You have 24 hours to confirm your account'));
-        }
-    }
-
-    /**
-     * Used for logged in user to change their password.
-     *
-     * @param type $id
-     * @param type $token
-     * @return type
-     * @throws NotFoundException
-     */
-    public function changePassword($id, $token = null)
-    {
-        $this->User->id = $this->Auth->user('id');
-        if (!$this->User->exists()) {
-            throw new NotFoundException(__('Invalid user'));
-        }
-        if ($this->request->is('post')) {
-            if (!$this->User->verifyToken($token)) {
-                $this->Session->setFlash(__('The user token is incorect.The password is not saved.'));
-                return $this->redirect(['action' => 'index']);
-            }
-            if ($this->User->changePassword($this->request->data)) {
-                return $this->redirect(['action' => 'index']);
-            } else {
-                $this->Session->setFlash(__('The user password could not be changed. Please, try again.'));
-            }
-        }
-        $this->set('token', $this->User->field('token'));
-        $this->set('id', $id);
-    }
-
-    /**
-     * Reset password for users that are not logged in
-     *
-     * @return null
-     */
-    public function resetPassword()
-    {
-        if ($this->request->is('post')) {
-            $email = $this->request->data['User']['email'];
-            $user = $this->User->findByEmail($email);
-            if (empty($user)) {
-                $this->Session->setFlash(sprintf(__('There is no user with %s email'), $email));
-            } else {
-                $this->_sendResetPasswordEmail($user);
-                $time = $this->User->tokenExpirationTime();
-                $this->User->set($user);
-                $this->User->saveField('token_email_expires', $time);
-                $this->Session->setFlash(__('You have 24 hours to reset your password'));
-                return $this->redirect(['action' => 'login']);
-            }
-        }
-    }
-
-    /**
-     * New password
-     *
-     * @param type $id
-     * @param type $emailToken
-     * @throws NotFoundException
-     */
-    public function newPassword($id, $emailToken)
-    {
-        $this->User->id = $id;
-        if (!$this->User->exists()) {
-            throw new NotFoundException(__('Invalid user'));
-        }
-        if (!$this->User->verifyEmailToken($emailToken)) {
-            throw new NotFoundException(__('The page you are trying to show is invalid'));
-        }
-        if ($this->request->is('post')) {
-            $this->User->savePassword($this->request->data['User']['password']);
-            return $this->redirect(['action' => 'login']);
-        }
-        $this->set('token', $emailToken);
-        $this->set('id', $id);
-    }
-
-    /**
-     * Renew the expiration date of token
-     *
-     * @param type $id
-     * @return type
-     * @throws NotFoundException
-     */
-    public function admin_renewToken($id = null)
-    {
-        $this->User->id = $id;
-        if (!$this->User->exists()) {
-            throw new NotFoundException(__('Invalid user'));
-        }
-        if ($this->User->renewToken()) {
-            $this->Session->setFlash(__('The token expires in 24 hours.'));
-        } else {
-            $this->Session->setFlash(__('The token could not be updated'));
-        }
-        return $this->redirect($this->referer());
-    }
-
-    /**
-     * Renew the expiration date of email token
-     *
-     * @param type $id
-     * @return type
-     * @throws NotFoundException
-     */
-    public function admin_renewTokenEmail($id = null)
-    {
-        $this->User->id = $id;
-        if (!$this->User->exists()) {
-            throw new NotFoundException(__('Invalid user'));
-        }
-        if ($this->User->renewTokenEmail()) {
-            $this->Session->setFlash(__('The token email expires in 24 hours.'));
-        } else {
-            $this->Session->setFlash(__('The token email could not be updated'));
-        }
-        return $this->redirect($this->referer());
     }
 
     /**
@@ -467,26 +483,29 @@ class UsersController extends UsersAppController
      */
     protected function _sendConfirmEmail($user = [])
     {
-        $this->Email->subject = sprintf(__('Welcome %s to CRM'), $user['User']['fullname']);
-        $this->Email->template = 'users/confirm';
-        $this->Email->to = $user['User']['email'];
-        $this->set('user', $user);
-        $this->Email->send();
+        $Email = new CakeEmail('default');
+        $Email->subject(sprintf(__('Welcome %s to CRM'), $user['User']['fullname']));
+        $Email->viewVars(['user' => $user]);
+        $Email->template('Users.confirm', 'view');
+        $Email->to($user['User']['email']);
+        $Email->emailFormat('html');
+        $Email->send();
     }
 
     /**
      * _sendRegisterEmail method
      *
-     * @param type $data
-     * @param type $options
+     * @param array $user
      */
     protected function _sendResetPasswordEmail($user = [])
     {
-        $this->Email->subject = sprintf(__('Reset password %s'), $user['User']['fullname']);
-        $this->Email->template = 'users/reset_password';
-        $this->Email->to = $user['User']['email'];
-        $this->set('user', $user);
-        $this->Email->send();
+        $Email = new CakeEmail('default');
+        $Email->subject(sprintf(__('Reset password %s'), $user['User']['fullname']));
+        $Email->template('Users.reset_password', 'view');
+        $Email->to($user['User']['email']);
+        $Email->viewVars(['user' => $user]);
+        $Email->emailFormat('html');
+        $Email->send();
     }
 
 }
