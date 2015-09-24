@@ -8,6 +8,7 @@ App::uses('UsersAppModel', 'Users.Model');
  * @property Group  $Group
  * @property Task   $Task
  * @property DayOff $DayOff
+ * @property Login  $Login
  * @package    Plugins
  * @subpackage Users.Models
  * @method findByEmail($email)
@@ -165,7 +166,7 @@ class User extends UsersAppModel
     /**
      * hasOne associations
      *
-     * @var type
+     * @var array
      */
     public $hasOne = [];
 
@@ -236,6 +237,10 @@ class User extends UsersAppModel
     /**
      * We need to create the virtual fields in construct method
      * because we use User model for other models too.
+     *
+     * @param bool|int|string|array $id    Set this ID for this model on startup
+     * @param string                $table Name of database table to use.
+     * @param string                $ds    DataSource connection name.
      */
     public function __construct($id = false, $table = null, $ds = null)
     {
@@ -277,9 +282,9 @@ class User extends UsersAppModel
     /**
      * bindNode method
      *
-     * @param type $user
+     * @param array $user
      * @TODO Write dynamically the model
-     * @return type
+     * @return array
      */
     public function bindNode($user)
     {
@@ -309,8 +314,8 @@ class User extends UsersAppModel
     /**
      * Save password of a user
      *
-     * @param type $password
-     * @return type
+     * @throws Exception
+     * @param string $password
      */
     public function savePassword($password)
     {
@@ -356,7 +361,8 @@ class User extends UsersAppModel
     /**
      * verify the token of the current record
      *
-     * @param string $token
+     * @param string     $token
+     * @param array|null $conditions
      * @return boolean
      */
     public function verifyToken($token, $conditions = null)
@@ -370,17 +376,19 @@ class User extends UsersAppModel
     /**
      * verify the email_token of the current record
      *
-     * @param string $token
+     * @param string     $token
+     * @param array|null $conditions
      * @return boolean
      */
     public function verifyEmailToken($token, $conditions = null)
     {
-        if ($token === $this->field('token_email', $conditions) && ($this->field('token_email_expires',
-                    $conditions) < time())
-        ) {
-            return true;
+        if ($this->field('token_email', $conditions) !== $token) {
+            return false;
         }
-        return false;
+        if ($this->field('token_email_expires', $conditions) > time()) {
+            return false;
+        }
+        return true;
     }
 
     /**
@@ -440,15 +448,12 @@ class User extends UsersAppModel
      * Fallback on next available method.
      * Override this method to use a different hashing method
      *
-     * @param string  $string String to hash
-     * @param string  $type   Method to use (sha1/sha256/md5)
-     * @param boolean $salt   If true, automatically appends the application's salt
-     *                        value to $string (Security.salt)
+     * @param string $string String to hash
      * @return string Hash
      */
     public function hash($string)
     {
-        return AuthComponent::password($string);
+        return Security::hash($string);
     }
 
     /**
@@ -479,9 +484,6 @@ class User extends UsersAppModel
 
     /**
      * beforeRegister method
-     *
-     * @param array $data
-     * @param array $options
      */
     public function beforeRegister()
     {
@@ -500,6 +502,8 @@ class User extends UsersAppModel
      * afterLogin method
      *
      * @param array $data
+     * @param array $options
+     * @return bool
      */
     public function afterLogin($data = [], $options = [])
     {
