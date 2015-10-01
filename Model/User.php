@@ -8,7 +8,6 @@ App::uses('UsersAppModel', 'Users.Model');
  * @property Group  $Group
  * @property Task   $Task
  * @property DayOff $DayOff
- * @property Login  $Login
  * @package    Plugins
  * @subpackage Users.Models
  * @method findByEmail($email)
@@ -190,19 +189,6 @@ class User extends UsersAppModel
             'limit' => '',
             'offset' => '',
             'exclusive' => '',
-            'finderQuery' => '',
-            'counterQuery' => '',
-        ],
-        'Login' => [
-            'className' => 'Login',
-            'foreignKey' => 'user_id',
-            'dependent' => true,
-            'conditions' => '',
-            'fields' => '',
-            'order' => '',
-            'limit' => '',
-            'offset' => '',
-            'exclusive' => true,
             'finderQuery' => '',
             'counterQuery' => '',
         ],
@@ -507,11 +493,15 @@ class User extends UsersAppModel
      */
     public function afterLogin($data = [], $options = [])
     {
-        $this->Login->create();
-        if (!$this->Login->save($data)) {
-            return false;
-        }
-        return true;
+        $this->log(
+            sprintf(
+                "User %s LoggedIn from ip %s using %s",
+                AuthComponent::user('fullname'),
+                $data['Login']['IP'],
+                $data['Login']['browser']
+            ),
+            LOG_DEBUG
+        );
     }
 
 }
