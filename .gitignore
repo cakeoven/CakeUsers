@@ -91,3 +91,8 @@ nb-configuration.xml
 /lib
 /plugins
 /tags
+=======
+build
+composer.lock
+docs
+vendor
