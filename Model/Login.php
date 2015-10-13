@@ -1,6 +1,6 @@
 <?php
 
-App::uses('AppModel', 'Model');
+App::uses('UserAppModel', 'Users.Model');
 
 /**
  * Login Model
@@ -31,46 +31,46 @@ class Login extends UsersAppModel
      *
      * @var array
      */
-    public $validate = array(
-        'user_id' => array(
-            'numeric' => array(
-                'rule' => array('numeric'),
+    public $validate = [
+        'user_id' => [
+            'numeric' => [
+                'rule' => ['numeric'],
                 //'message' => 'Your custom message here',
                 //'allowEmpty' => false,
                 //'required' => false,
-            ),
-        ),
-        'browser' => array(
-            'notEmpty' => array(
-                'rule' => array('notEmpty'),
+            ],
+        ],
+        'browser' => [
+            'notEmpty' => [
+                'rule' => ['notEmpty'],
                 //'message' => 'Your custom message here',
                 //'allowEmpty' => false,
                 //'required' => false,
-            ),
-        ),
-        'IP' => array(
-            'notEmpty' => array(
-                'rule' => array('notEmpty'),
+            ],
+        ],
+        'IP' => [
+            'notEmpty' => [
+                'rule' => ['notEmpty'],
                 //'message' => 'Your custom message here',
                 //'allowEmpty' => false,
                 //'required' => false,
-            ),
-        ),
-    );
+            ],
+        ],
+    ];
 
     /**
      * belongsTo associations
      *
      * @var array
      */
-    public $belongsTo = array(
-        'User' => array(
+    public $belongsTo = [
+        'User' => [
             'className' => 'User',
             'foreignKey' => 'user_id',
             'conditions' => '',
             'fields' => '',
-            'order' => ''
-        )
-    );
+            'order' => '',
+        ],
+    ];
 
 }
