@@ -129,7 +129,7 @@ class UsersController extends UsersAppController
             if ($this->User->save($this->request->data)) {
                 return $this->redirect(['action' => 'index']);
             } else {
-                $this->Session->setFlash(__('The user could not be saved. Please, try again.'));
+                $this->Flash->set(__('The user could not be saved. Please, try again.'));
             }
         } else {
             $this->request->data = $this->User->findById($id);
@@ -176,7 +176,7 @@ class UsersController extends UsersAppController
             if ($this->User->save($this->request->data)) {
                 $this->redirect(['action' => 'index']);
             } else {
-                $this->Session->setFlash(__('The user could not be saved. Please, try again.'));
+                $this->Flash->set(__('The user could not be saved. Please, try again.'));
             }
         }
         $bankAccounts = $this->User->BankAccount->find('list');
@@ -200,7 +200,7 @@ class UsersController extends UsersAppController
             if ($this->User->save($this->request->data)) {
                 return $this->redirect(['action' => 'index']);
             } else {
-                $this->Session->setFlash(__('The user could not be saved. Please, try again.'));
+                $this->Flash->set(__('The user could not be saved. Please, try again.'));
             }
         } else {
             $this->User->recursive = 0;
@@ -258,10 +258,10 @@ class UsersController extends UsersAppController
             if ($this->User->save($this->request->data)) {
                 $user = $this->User->findById($this->User->getLastInsertID());
                 $this->_sendConfirmEmail($user);
-                $this->Session->setFlash(__('The registration was successful. Check your email to confirm your account'));
+                $this->Flash->set(__('The registration was successful. Check your email to confirm your account'));
                 return $this->redirect(['action' => 'index']);
             } else {
-                $this->Session->setFlash(__('The user could not be registered. Please, try again.'));
+                $this->Flash->set(__('The user could not be registered. Please, try again.'));
             }
         }
     }
@@ -295,30 +295,21 @@ class UsersController extends UsersAppController
             $user = $this->User->findByEmail($email);
 
             if (empty($user)) {
-                $this->Session->setFlash(
-                    sprintf(__('There is no user with %s email'), $email),
-                    'CakeBootstrap.alert_danger'
-                );
+                $this->Flash->danger(sprintf(__('There is no user with %s email'), $email));
                 return;
             }
 
             if ($user['User']['verified'] == true) {
-                $this->Session->setFlash(
-                    sprintf(__('The user with email %s is already verified'), $email),
-                    'CakeBootstrap.alert_danger'
-                );
+                $this->Flash->danger(sprintf(__('The user with email %s is already verified'), $email));
                 return;
             }
 
             if (!$this->User->verifyEmailToken($user['User']['token_email'])) {
-                $this->Session->setFlash(
-                    __('Confirmation email can not be resend for technical issues. Please contact admin'),
-                    'CakeBootstrap.alert_danger'
-                );
+                $this->Flash->danger(__('Confirmation email can not be resend for technical issues. Please contact admin'));
                 return;
             }
             $this->_sendConfirmEmail($user);
-            $this->Session->setFlash(__('You have 24 hours to confirm your account'), 'CakeBootstrap.alert_success');
+            $this->Flash->success(__('You have 24 hours to confirm your account'));
         }
     }
 
@@ -338,13 +329,13 @@ class UsersController extends UsersAppController
         }
         if ($this->request->is('post')) {
             if (!$this->User->verifyToken($token)) {
-                $this->Session->setFlash(__('The user token is incorrect.The password is not saved.'));
+                $this->Flash->set(__('The user token is incorrect.The password is not saved.'));
                 return $this->redirect(['action' => 'index']);
             }
             if ($this->User->changePassword($this->request->data)) {
                 return $this->redirect(['action' => 'index']);
             } else {
-                $this->Session->setFlash(__('The user password could not be changed. Please, try again.'));
+                $this->Flash->set(__('The user password could not be changed. Please, try again.'));
             }
         }
         $this->set('token', $this->User->field('token'));
@@ -362,13 +353,15 @@ class UsersController extends UsersAppController
             $email = $this->request->data['User']['email'];
             $user = $this->User->findByEmail($email);
             if (empty($user)) {
-                $this->Session->setFlash(sprintf(__('There is no user with %s email'), $email));
+                $this->Flash->set(sprintf(__('There is no user with %s email'), $email));
             } else {
-                $this->_sendResetPasswordEmail($user);
-                $time = $this->User->tokenExpirationTime();
+                $user['User']['token_email'] = $token = $this->User->generateToken();
+                $user['User']['token_email_expires'] = $time = $this->User->tokenExpirationTime();
                 $this->User->set($user);
+                $this->User->saveField('token_email', $token);
                 $this->User->saveField('token_email_expires', $time);
-                $this->Session->setFlash(__('You have 24 hours to reset your password'), 'alert_success');
+                $this->_sendResetPasswordEmail($user);
+                $this->Flash->success(__('You have 24 hours to reset your password'));
                 return $this->redirect(['action' => 'login']);
             }
         }
@@ -412,9 +405,9 @@ class UsersController extends UsersAppController
             throw new NotFoundException(__('Invalid user'));
         }
         if ($this->User->renewToken()) {
-            $this->Session->setFlash(__('The token expires in 24 hours.'), 'CakeBootstrap.alert_success');
+            $this->Flash->success(__('The token expires in 24 hours.'));
         } else {
-            $this->Session->setFlash(__('The token could not be updated'), 'CakeBootstrap.alert_danger');
+            $this->Flash->danger(__('The token could not be updated'));
         }
         return $this->redirect($this->referer());
     }
@@ -432,9 +425,9 @@ class UsersController extends UsersAppController
             throw new NotFoundException(__('Invalid user'));
         }
         if ($this->User->renewTokenEmail()) {
-            $this->Session->setFlash(__('The token email expires in 24 hours.'), 'CakeBootstrap.alert_success');
+            $this->Flash->success(__('The token email expires in 24 hours.'));
         } else {
-            $this->Session->setFlash(__('The token email could not be updated'), 'CakeBootstrap.alert_danger');
+            $this->Flash->danger(__('The token email could not be updated'));
         }
         $this->redirect($this->referer());
     }
@@ -444,7 +437,7 @@ class UsersController extends UsersAppController
      */
     public function login()
     {
-        if ($this->Auth->loggedIn()) {
+        if (AuthComponent::user()) {
             return $this->redirect('/dashboard');
         }
         if ($this->request->is('post')) {
@@ -455,7 +448,7 @@ class UsersController extends UsersAppController
                 $this->User->afterLogin($data);
                 return $this->redirect('/dashboard');
             } else {
-                $this->Session->setFlash('Your username or password was incorrect.');
+                $this->Flash->set('Your username or password was incorrect.');
             }
         }
     }
@@ -469,10 +462,7 @@ class UsersController extends UsersAppController
     {
         $user = $this->Auth->user();
         $this->Session->destroy();
-        $this->Session->setFlash(
-            sprintf(__('%s you have successfully logged out'), $user[$this->User->displayField]),
-            'CakeBootstrap.alert_warning'
-        );
+        $this->Flash->warning(sprintf(__('%s you have successfully logged out'), $user[$this->User->displayField]));
         $this->redirect($this->Auth->logout());
     }
 
