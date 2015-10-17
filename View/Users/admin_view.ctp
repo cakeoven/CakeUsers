@@ -17,7 +17,7 @@
         </div>
     </div>
     <div class="col-sm-10">
-        <?php echo $this->Element->pageTitle(__('View user'), 'h4'); ?>
+        <?php echo $this->Html->pageHeader(__('View user'), 'h4'); ?>
         <dl class="dl-horizontal">
             <dt><?php echo __('Id'); ?></dt>
             <dd>

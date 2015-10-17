@@ -9,7 +9,7 @@
         </div>
     </div>
     <div class="col-sm-9 col-md-10">
-        <?php echo $this->Element->pageTitle(__('Group')); ?>
+        <?php echo $this->Html->pageHeader(__('Group'), 'h3'); ?>
         <dl class="dl-horizontal">
             <dt><?php echo __('Name'); ?></dt>
             <dd>
