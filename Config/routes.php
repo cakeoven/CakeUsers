@@ -10,4 +10,15 @@
 Router::connect('/login', ['plugin' => 'users', 'controller' => 'users', 'action' => 'login']);
 Router::connect('/logout', ['plugin' => 'users', 'controller' => 'users', 'action' => 'logout']);
 Router::connect('/register', ['plugin' => 'users', 'controller' => 'users', 'action' => 'register']);
-Router::connect('/admin/users/:controller/:action/*', ['plugin' => 'users', 'admin' => true, 'prefix' => 'admin']);
+Router::connect('/users/:action/*', [
+    'plugin' => 'users',
+    'controller' => 'users',
+    'admin' => false,
+    'prefix' => null,
+]);
+Router::connect('/admin/users/:action/*', [
+    'plugin' => 'users',
+    'controller' => 'users',
+    'admin' => true,
+    'prefix' => 'admin',
+]);
