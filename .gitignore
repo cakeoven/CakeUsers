@@ -63,7 +63,7 @@ app/[Cc]onfig/email.php
 ### Composer 
 composer.phar
 composer.lock
-vendor/
+vendor
 
 ### IDE Project files
 
@@ -84,8 +84,9 @@ nbactions.xml
 nb-configuration.xml
 .nb-gradle/
 
-### ApiGen
-/app/webroot/doc/
+### Documentation
+apigen.phar
+docs
 
 ### Custom
 /lib
@@ -93,6 +94,3 @@ nb-configuration.xml
 /tags
 =======
 build
-composer.lock
-docs
-vendor

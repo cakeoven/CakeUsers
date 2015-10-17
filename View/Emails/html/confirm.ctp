@@ -12,12 +12,12 @@ echo __('Hello %s,', $user['User']['username']);
 echo "\n";
 echo __('to validate your account, you must visit the URL below within 24 hours');
 echo "\n";
-echo $this->Html->link(array(
+echo $this->Html->link([
         'admin' => false,
         'controller' => 'users',
         'action' => 'confirm',
         $user['User']['id'],
         $user['User']['token_email'],
-        'full_base' => true
-    )
+        'full_base' => true,
+    ]
 );

@@ -1,14 +1,9 @@
 # CakeUsers
 
-**Note:** Replace ```:author_name``` ```:author_username``` ```:author_website``` ```:author_email``` ```:package_name``` ```:package_description``` with their correct values in [README.md](README.md), [CHANGELOG.md](CHANGELOG.md), [CONTRIBUTING.md](CONTRIBUTING.md), [LICENSE.md](LICENSE.md) and [composer.json](composer.json) files, then delete this line.
-
 ## Thanks
 
 This plugin is based to CakeDC/Users
-
-Many thanks.
-
-https://github.com/CakeDC/users
+Many thanks to [CakeDC](https://github.com/CakeDC/users)
 
 ## Install
 
@@ -30,13 +25,9 @@ $ composer test
 
 Please see [CONTRIBUTING](CONTRIBUTING.md) and [CONDUCT](CONDUCT.md) for details.
 
-## Security
-
-If you discover any security related issues, please email :author_email instead of using the issue tracker.
-
 ## Credits
 
-- [:author_name][link-author]
+- [George Mponos][gmponos.webthink.gr]
 - [All Contributors][link-contributors]
 
 ## License

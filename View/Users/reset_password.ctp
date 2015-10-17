@@ -1,6 +1,5 @@
 <?php $this->layout = 'login'; ?>
 <h3 class="page-header"><?= __('Reset Password'); ?></h3>
-
 <div class="row">
     <div class="col-sm-4">
         <div class="list-group">

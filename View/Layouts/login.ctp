@@ -17,7 +17,7 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-6 col-md-offset-3">
-                    <?= $this->Session->flash(); ?>
+                    <?= $this->Flash->render(); ?>
                     <?= $this->fetch('content'); ?>
                     <?= $this->element('footer'); ?>
                 </div>

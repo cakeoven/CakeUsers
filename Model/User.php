@@ -326,8 +326,8 @@ class User extends UsersAppModel
     }
 
     /**
-     * @param type $check
-     * @return type
+     * @param array $check
+     * @return bool
      */
     public function validatePassword($check)
     {
@@ -495,7 +495,7 @@ class User extends UsersAppModel
         if (!isset($this->data['User']['group_id'])) {
             $data['User']['group_id'] = $this->Group->field('Group.id', ['name' => 'user']);
         }
-        $this->data = array_merge_recursive($this->data, $data);
+        $this->data = Hash::merge($this->data, $data);
     }
 
     /**
