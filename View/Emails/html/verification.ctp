@@ -9,15 +9,15 @@
  * @license   MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
 echo __d('users', 'Hello %s,', $user['User']['username']);
-echo "\n";
-echo __d('users', 'to validate your account, you must visit the URL below within 24 hours');
-echo "\n";
-echo Router::url(
-    [
-        'admin' => false,
-        'controller' => 'users',
-        'action' => 'verify',
-        $user['User']['id'],
-        $user['User']['email_token'],
-    ], true
-);
+echo "<br>";
+echo __d('users', 'To validate your account, you must visit the URL below within 24 hours');
+echo "<br>";
+echo $this->Html->link([
+    'admin' => false,
+    'plugin' => false,
+    'controller' => 'users',
+    'action' => 'verify',
+    $user['User']['id'],
+    $user['User']['email_token'],
+    'full_base' => true,
+]);

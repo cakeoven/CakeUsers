@@ -1,4 +1,3 @@
-<hr/>
 <footer>
     <div>
         <?= $this->Html->link(

@@ -1,5 +1,5 @@
 <?php $this->Html->addCrumb($this->Html->link(__('Users'), ['action' => 'index'],
-    ['icon' => ['class' => 'icon icon-user icon-fw']])); ?>
+    ['icon' => ['class' => 'fa fa-user fa-fw']])); ?>
 <?php $this->Html->addCrumb(__('Personal')); ?>
 
 <?php echo $this->Form->create('User'); ?>

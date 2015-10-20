@@ -475,19 +475,15 @@ class User extends UsersAppModel
                 return parent::beforeSave($options);
             }
         }
-        if (isset($this->data['User']['password'])) {
-            $this->data['User']['password'] = $this->hash($this->data['User']['password']);
-            $this->beforeRegister();
-        }
         return parent::beforeSave($options);
     }
 
     /**
      * beforeRegister method
      */
-    public function beforeRegister()
+    public function beforeRegister(array $data = [])
     {
-        $data = [];
+        $data['User']['password'] = $this->hash($data['User']['password']);
         $data['User']['token'] = $this->generateToken();
         $data['User']['token_expires'] = $this->tokenExpirationTime();
         $data['User']['token_email'] = $this->generateToken();
@@ -495,7 +491,7 @@ class User extends UsersAppModel
         if (!isset($this->data['User']['group_id'])) {
             $data['User']['group_id'] = $this->Group->field('Group.id', ['name' => 'user']);
         }
-        $this->data = Hash::merge($this->data, $data);
+        return $data;
     }
 
     /**

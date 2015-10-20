@@ -3,7 +3,7 @@
     <head>
         <?= $this->Html->charset(); ?>
         <title>
-            <?= $title_for_layout; ?>
+            <?= 'Webthink CRM' ?>
         </title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <?= $this->Html->meta('icon'); ?>

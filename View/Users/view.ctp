@@ -1,5 +1,5 @@
-<?php $this->Html->addCrumb($this->Html->link(__('Users'), array('action' => 'index'),
-    array('icon' => array('class' => 'icon icon-user icon-fw')))); ?>
+<?php $this->Html->addCrumb($this->Html->link(__('Users'), ['action' => 'index'],
+    ['icon' => ['class' => 'fa fa-user fa-fw']])); ?>
 <?php $this->Html->addCrumb(__('View')); ?>
 <?php $this->Html->addCrumb($user['User']['id']); ?>
 <div class="row">

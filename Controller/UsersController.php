@@ -6,7 +6,6 @@ App::uses('UsersAppController', 'Users.Controller');
 /**
  * Users Controller
  *
- * @todo           set dynamically the alerts
  * @property    User $User
  * @package        Plugins
  * @subpackage     Users.Controllers
@@ -34,7 +33,7 @@ class UsersController extends UsersAppController
      * pagination settings.
      *
      * @param array $scope
-     * @return void
+     * @return array
      */
     protected function _paginate($scope = [])
     {
@@ -57,7 +56,7 @@ class UsersController extends UsersAppController
      * pagination settings. admin_index()
      *
      * @param array $scope
-     * @return void
+     * @return array
      */
     protected function _admin_paginate($scope = [])
     {
@@ -116,7 +115,6 @@ class UsersController extends UsersAppController
      * personal method
      *
      * @throws NotFoundException
-     * @return void
      */
     public function personal()
     {
@@ -129,7 +127,7 @@ class UsersController extends UsersAppController
             if ($this->User->save($this->request->data)) {
                 return $this->redirect(['action' => 'index']);
             } else {
-                $this->Flash->set(__('The user could not be saved. Please, try again.'));
+                $this->Flash->danger(__('The user could not be saved. Please, try again.'));
             }
         } else {
             $this->request->data = $this->User->findById($id);
@@ -176,7 +174,7 @@ class UsersController extends UsersAppController
             if ($this->User->save($this->request->data)) {
                 $this->redirect(['action' => 'index']);
             } else {
-                $this->Flash->set(__('The user could not be saved. Please, try again.'));
+                $this->Flash->danger(__('The user could not be saved. Please, try again.'));
             }
         }
         $bankAccounts = $this->User->BankAccount->find('list');
@@ -189,7 +187,6 @@ class UsersController extends UsersAppController
      *
      * @throws NotFoundException
      * @param string $id
-     * @return void
      */
     public function admin_edit($id = null)
     {
@@ -200,7 +197,7 @@ class UsersController extends UsersAppController
             if ($this->User->save($this->request->data)) {
                 return $this->redirect(['action' => 'index']);
             } else {
-                $this->Flash->set(__('The user could not be saved. Please, try again.'));
+                $this->Flash->danger(__('The user could not be saved. Please, try again.'));
             }
         } else {
             $this->User->recursive = 0;
@@ -217,7 +214,6 @@ class UsersController extends UsersAppController
      * @throws NotFoundException
      * @throws MethodNotAllowedException
      * @param string $id
-     * @return void
      */
     public function admin_delete($id = null)
     {
@@ -255,13 +251,14 @@ class UsersController extends UsersAppController
     {
         if ($this->request->is('post')) {
             $this->User->create();
+            $this->request->data = $this->User->beforeRegister($this->request->data);
             if ($this->User->save($this->request->data)) {
                 $user = $this->User->findById($this->User->getLastInsertID());
                 $this->_sendConfirmEmail($user);
-                $this->Flash->set(__('The registration was successful. Check your email to confirm your account'));
+                $this->Flash->success(__('The registration was successful. Check your email to confirm your account'));
                 return $this->redirect(['action' => 'index']);
             } else {
-                $this->Flash->set(__('The user could not be registered. Please, try again.'));
+                $this->Flash->danger(__('The user could not be registered. Please, try again.'));
             }
         }
     }
@@ -271,7 +268,6 @@ class UsersController extends UsersAppController
      *
      * @param int    $id
      * @param string $emailToken
-     * @return void
      */
     public function confirm($id, $emailToken)
     {
@@ -318,7 +314,6 @@ class UsersController extends UsersAppController
      *
      * @param int    $id
      * @param string $token
-     * @return void
      * @throws NotFoundException
      */
     public function changePassword($id, $token = null)
@@ -329,13 +324,13 @@ class UsersController extends UsersAppController
         }
         if ($this->request->is('post')) {
             if (!$this->User->verifyToken($token)) {
-                $this->Flash->set(__('The user token is incorrect.The password is not saved.'));
+                $this->Flash->danger(__('The user token is incorrect. The password is not saved.'));
                 return $this->redirect(['action' => 'index']);
             }
             if ($this->User->changePassword($this->request->data)) {
                 return $this->redirect(['action' => 'index']);
             } else {
-                $this->Flash->set(__('The user password could not be changed. Please, try again.'));
+                $this->Flash->danger(__('The user password could not be changed. Please, try again.'));
             }
         }
         $this->set('token', $this->User->field('token'));
@@ -353,7 +348,7 @@ class UsersController extends UsersAppController
             $email = $this->request->data['User']['email'];
             $user = $this->User->findByEmail($email);
             if (empty($user)) {
-                $this->Flash->set(sprintf(__('There is no user with %s email'), $email));
+                $this->Flash->danger(sprintf(__('There is no user with %s email'), $email));
             } else {
                 $user['User']['token_email'] = $token = $this->User->generateToken();
                 $user['User']['token_email_expires'] = $time = $this->User->tokenExpirationTime();
@@ -448,7 +443,7 @@ class UsersController extends UsersAppController
                 $this->User->afterLogin($data);
                 return $this->redirect('/dashboard');
             } else {
-                $this->Flash->set('Your username or password was incorrect.');
+                $this->Flash->danger('Your username or password was incorrect.');
             }
         }
     }

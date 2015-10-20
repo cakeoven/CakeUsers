@@ -1,15 +1,15 @@
 <?php
 
 echo __('Hello %s,', $user['User']['username']);
-echo "\n";
-echo __('to change your password, you must visit the URL below');
-echo "\n";
+echo "<br>";
+echo __('To change your password, you must visit the URL below');
+echo "<br>";
 echo $this->Html->link([
-        'admin' => false,
-        'controller' => 'users',
-        'action' => 'newPassword',
-        $user['User']['id'],
-        $user['User']['token_email'],
-        'full_base' => true,
-    ]
-);
+    'admin' => false,
+    'plugin' => false,
+    'controller' => false,
+    'action' => 'newPassword',
+    $user['User']['id'],
+    $user['User']['token_email'],
+    'full_base' => true,
+]);
