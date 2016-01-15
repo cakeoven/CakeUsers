@@ -44,9 +44,24 @@ Router::connect('/newPassword/:id/:token', [
 ], [
     'pass' => ['id', 'token'],
 ]);
+
 Router::connect('/users/:action/*', [
     'plugin' => 'users',
     'controller' => 'users',
+    'admin' => false,
+    'prefix' => null,
+]);;
+
+Router::connect('/logins/:action/*', [
+    'plugin' => 'users',
+    'controller' => 'logins',
+    'admin' => false,
+    'prefix' => null,
+]);
+
+Router::connect('/groups/:action/*', [
+    'plugin' => 'users',
+    'controller' => 'groups',
     'admin' => false,
     'prefix' => null,
 ]);
@@ -54,6 +69,20 @@ Router::connect('/users/:action/*', [
 Router::connect('/admin/users/:action/*', [
     'plugin' => 'users',
     'controller' => 'users',
+    'admin' => true,
+    'prefix' => 'admin',
+]);
+
+Router::connect('/admin/logins/:action/*', [
+    'plugin' => 'users',
+    'controller' => 'logins',
+    'admin' => true,
+    'prefix' => 'admin',
+]);
+
+Router::connect('/admin/groups/:action/*', [
+    'plugin' => 'users',
+    'controller' => 'groups',
     'admin' => true,
     'prefix' => 'admin',
 ]);

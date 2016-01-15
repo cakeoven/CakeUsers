@@ -87,9 +87,13 @@
             </dd>
         </dl>
         <ul class="nav nav-tabs nav-tabs-remote">
-            <li class="active"><?php echo $this->Html->link(__('Logins'),
-                    ['controller' => 'logins', 'action' => 'related', 'user_id' => $user['User']['id']],
-                    ['data-toggle' => 'tab', 'data-target' => '#related-logins']) ?></li>
+            <li class="active"><?= $this->Html->link(__('Logins'), [
+                    'controller' => 'logins',
+                    'action' => 'related',
+                    'plugin' => false,
+                    'user_id' => $user['User']['id'],
+                ], ['data-toggle' => 'tab', 'data-target' => '#related-logins']) ?>
+            </li>
         </ul>
         <div class="tab-content">
             <div id="related-logins" class="tab-pane active"></div>
