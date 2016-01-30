@@ -52,7 +52,7 @@
                         <td>
                             <time><?= h($user['User']['updated']); ?></time>
                         </td>
-                        <td class="actions">
+                        <td class="text-nowrap">
                             <?= $this->Element->btnLinkView($user['User']['id']); ?>
                             <?= $this->Element->btnLinkEdit($user['User']['id']); ?>
                             <?= $this->Element->btnLinkDelete($user['User']['id']); ?>
@@ -63,6 +63,5 @@
         </table>
 
     </div>
-<?php
-echo $this->element('pagination/paging');
-echo $this->element('pagination/pagination');
+<?= $this->element('pagination/paging'); ?>
+<?= $this->element('pagination/pagination'); ?>

@@ -1,24 +1,11 @@
 <?php $this->layout = 'login'; ?>
 <h3 class="page-header"><?= __('Reset Password'); ?></h3>
-
 <div class="row">
     <div class="col-sm-4">
         <div class="list-group">
-            <?= $this->Html->link(
-                __('Login'),
-                ['action' => 'login'],
-                ['class' => 'list-group-item']
-            ); ?>
-            <?= $this->Html->link(
-                __('Register'),
-                ['action' => 'register'],
-                ['class' => 'list-group-item']
-            ); ?>
-            <?= $this->Html->link(
-                __('Resend confirmation'),
-                ['admin' => false, 'action' => 'confirmResend'],
-                ['class' => 'list-group-item']
-            ); ?>
+            <?= $this->Html->link(__('Login'), '/login', ['class' => 'list-group-item']); ?>
+            <?= $this->Html->link(__('Register'), '/register', ['class' => 'list-group-item']); ?>
+            <?= $this->Html->link(__('Resend confirmation'), '/confirmResend', ['class' => 'list-group-item']); ?>
         </div>
     </div>
     <div class="col-sm-8">

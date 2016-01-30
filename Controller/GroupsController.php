@@ -77,8 +77,6 @@ class GroupsController extends UsersAppController
 
     /**
      * admin_add method
-     *
-     * @return void
      */
     public function admin_add()
     {
@@ -87,7 +85,7 @@ class GroupsController extends UsersAppController
             if ($this->Group->save($this->request->data)) {
                 return $this->redirect(['action' => 'index']);
             } else {
-                $this->Session->setFlash(__('The group could not be saved. Please, try again.'));
+                $this->Flash->error(__('The group could not be saved. Please, try again.'));
             }
         }
     }
@@ -97,7 +95,6 @@ class GroupsController extends UsersAppController
      *
      * @throws NotFoundException
      * @param string $id
-     * @return void
      */
     public function admin_edit($id = null)
     {
@@ -108,7 +105,7 @@ class GroupsController extends UsersAppController
             if ($this->Group->save($this->request->data)) {
                 return $this->redirect(['action' => 'index']);
             } else {
-                $this->Session->setFlash(__('The group could not be saved. Please, try again.'));
+                $this->Flash->error(__('The group could not be saved. Please, try again.'));
             }
         } else {
             $this->request->data = $this->Group->findById($id);
@@ -121,7 +118,6 @@ class GroupsController extends UsersAppController
      * @throws NotFoundException
      * @throws MethodNotAllowedException
      * @param string $id
-     * @return void
      */
     public function admin_delete($id = null)
     {
@@ -130,7 +126,7 @@ class GroupsController extends UsersAppController
             throw new NotFoundException(__('Invalid group'));
         }
         if (!$this->Group->delete($id, false)) {
-            $this->Session->setFlash(__('Group is not deleted'));
+            $this->Flash->error(__('Group is not deleted'));
         }
         $this->autoRender = false;
     }

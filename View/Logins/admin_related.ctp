@@ -15,8 +15,12 @@
                 <td>
                     <time><?php echo h($login['Login']['modified']); ?></time>
                 </td>
-                <td>
-                    <?php echo $this->Element->btnLinkDelete($login['Login']['id']); ?>
+                <td class="text-center text-nowrap">
+                    <?php echo $this->Element->btnLinkDelete([
+                        'action' => 'delete_related',
+                        $login['Login']['id'],
+                        $this->request->params['named']['user_id'],
+                    ], '', ['data-update' => '#related-logins']); ?>
                 </td>
             </tr>
         <?php endforeach; ?>

@@ -5,9 +5,8 @@ App::uses('UsersAppController', 'Users.Controller');
 /**
  * Logins Controller
  *
- * @property    Login $Login
- * @package        Plugins
- * @subpackage     Users.Controllers
+ * @property Login $Login
+ * @package Users
  */
 class LoginsController extends UsersAppController
 {
@@ -23,8 +22,6 @@ class LoginsController extends UsersAppController
 
     /**
      * admin_index method
-     *
-     * @return void
      */
     public function admin_index()
     {
@@ -37,20 +34,50 @@ class LoginsController extends UsersAppController
      *
      * @throws NotFoundException
      * @param string $id
-     * @return void
      */
     public function admin_delete($id = null)
     {
-        $this->request->onlyAllow('post', 'delete');
+        $this->request->allowMethod('post', 'delete');
         $this->Login->id = $id;
         if (!$this->Login->exists()) {
             throw new NotFoundException(__('Invalid login'));
         }
         if (!$this->Login->delete($id)) {
-            throw new NotFoundException(__('Task was not deleted'));
+            throw new NotFoundException(__('Login was not deleted'));
         }
         if ($this->request->is('ajax')) {
             return $this->redirect($this->referer());
+        }
+        return $this->redirect([
+            'controller' => 'logins',
+            'action' => 'index',
+        ]);
+    }
+
+    /**
+     * admin_delete method
+     *
+     * @throws NotFoundException
+     * @param string $id
+     * @param string $user_id
+     */
+    public function admin_delete_related($id, $user_id)
+    {
+        $this->request->allowMethod('post', 'delete');
+        $this->Login->id = $id;
+        if (!$this->Login->exists()) {
+            throw new NotFoundException(__('Invalid login'));
+        }
+        if (!$this->Login->delete($id)) {
+            throw new NotFoundException(__('Login was not deleted'));
+        }
+        if ($this->request->is('ajax')) {
+            return $this->redirect([
+                'plugin' => false,
+                'controller' => 'logins',
+                'action' => 'related',
+                'user_id' => $user_id,
+            ]);
         }
         return $this->redirect(['action' => 'index']);
     }
@@ -58,18 +85,14 @@ class LoginsController extends UsersAppController
     /**
      * admin delete all the logins method
      *
-     * @return void
      * @throws NotFoundException
      */
     public function admin_deleteAll()
     {
-        $this->request->onlyAllow('post', 'delete');
-        $this->Login->id = $id;
-        if (!$this->Login->exists()) {
-            throw new NotFoundException(__('Invalid login'));
-        }
-        if (!$this->Login->delete($id)) {
-            throw new NotFoundException(__('Task was not deleted'));
+        $this->request->allowMethod('post', 'delete');
+        $user_id = AuthComponent::user('id');
+        if (!$this->Login->deleteAll(['user_id' => $user_id])) {
+            throw new NotFoundException(__('Login was not deleted'));
         }
         if ($this->request->is('ajax')) {
             return $this->redirect($this->referer());

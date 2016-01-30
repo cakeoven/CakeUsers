@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Copyright 2010 - 2013, Cake Development Corporation (http://cakedc.com)
  * Licensed under The MIT License
@@ -13,9 +12,10 @@
 <?= __('to validate your account, you must visit the URL below within 24 hours') . "\n"; ?>
 <?= $this->Html->link([
     'admin' => false,
+    'plugin' => false,
     'controller' => 'users',
     'action' => 'confirm',
     $user['User']['id'],
     $user['User']['token_email'],
     'full_base' => true,
-]);
+]); ?>

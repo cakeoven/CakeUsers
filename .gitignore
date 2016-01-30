@@ -35,15 +35,6 @@ $RECYCLE.BIN/
 .Trashes
 Icon?
 
-
-### CakePHP 
-## CakePHP 3
-
-/vendor/*
-/config/app.php
-/tmp/*
-/logs/*
-
 ## CakePHP 2
 
 tmp/*
@@ -63,7 +54,7 @@ app/[Cc]onfig/email.php
 ### Composer 
 composer.phar
 composer.lock
-vendor/
+vendor
 
 ### IDE Project files
 
@@ -84,13 +75,11 @@ nbactions.xml
 nb-configuration.xml
 .nb-gradle/
 
-### ApiGen
-/app/webroot/doc/
+### Documentation
+apigen.phar
+docs
 
 ### Custom
 /lib
 /plugins
 /tags
-=======
-build
-docs

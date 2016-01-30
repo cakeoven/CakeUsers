@@ -3,7 +3,7 @@
     <head>
         <?= $this->Html->charset(); ?>
         <title>
-            <?= $title_for_layout; ?>
+            <?= 'Webthink CRM' ?>
         </title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <?= $this->Html->meta('icon'); ?>
@@ -17,7 +17,7 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-6 col-md-offset-3">
-                    <?= $this->Session->flash(); ?>
+                    <?= $this->Flash->render(); ?>
                     <?= $this->fetch('content'); ?>
                     <?= $this->element('footer'); ?>
                 </div>
