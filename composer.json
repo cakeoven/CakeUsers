@@ -32,6 +32,6 @@
     "branch-alias": {
       "dev-master": "2.0-dev"
     },
-    "installer-name": "CakeUsers"
+    "installer-name": "Users"
   }
 }
