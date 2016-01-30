@@ -6,8 +6,7 @@ App::uses('UserAppModel', 'Users.Model');
  * Login Model
  *
  * @property User $User
- * @package    Plugins
- * @subpackage Users.Models
+ * @package CakeUsers
  */
 class Login extends UsersAppModel
 {
@@ -15,7 +14,7 @@ class Login extends UsersAppModel
     /**
      * Order field
      *
-     * @var type
+     * @var string
      */
     public $order = 'Login.modified DESC';
 
@@ -72,5 +71,4 @@ class Login extends UsersAppModel
             'order' => '',
         ],
     ];
-
 }

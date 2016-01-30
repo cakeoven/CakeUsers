@@ -1,9 +1,15 @@
-<?php $this->Html->addCrumb($this->Html->link(__('Users'), ['action' => 'index'],
-    ['icon' => ['class' => 'fa fa-users fa-fw']])); ?>
+<?php $this->Html->addCrumb($this->Html->link(
+    __('Users'),
+    ['action' => 'index'],
+    ['icon' => ['class' => 'fa fa-users fa-fw']]
+)); ?>
     <div class="toolbar toolbar-default">
         <?= $this->element('search'); ?>
-        <?= $this->Html->link(__('Add'), ['action' => 'add'],
-            ['class' => 'btn btn-success btn-sm', 'icon' => ['class' => 'fa fa-plus fa-fw']]); ?>
+        <?= $this->Html->link(
+            __('Add'),
+            ['action' => 'add'],
+            ['class' => 'btn btn-success btn-sm', 'icon' => ['class' => 'fa fa-plus fa-fw']]
+        ); ?>
     </div>
     <div class="table-responsive">
         <table class="table table-hover table-bordered table-striped small">
@@ -25,14 +31,16 @@
                 </tr>
             </thead>
             <tbody>
-                <?php foreach ($users as $user): ?>
+                <?php foreach ($users as $user) : ?>
                     <tr>
                         <td><?= h($user['User']['id']); ?></td>
                         <td class="text-center"><?= $this->Html->status($user['User']['active']); ?></td>
                         <td class="text-center"><?= $this->Html->status($user['User']['verified']); ?></td>
                         <td><?= h($user['User']['username']); ?></td>
-                        <td><?= $this->Html->link($user['Group']['name'],
-                                ['controller' => 'groups', 'action' => 'view', $user['Group']['id']]); ?></td>
+                        <td><?= $this->Html->link(
+                            $user['Group']['name'],
+                            ['controller' => 'groups', 'action' => 'view', $user['Group']['id']]
+                        ); ?></td>
                         <td><?= h($user['User']['firstname']); ?>&nbsp;</td>
                         <td><?= h($user['User']['lastname']); ?>&nbsp;</td>
                         <td><?= $this->Text->autoLinkEmails($user['User']['email']) ?></td>

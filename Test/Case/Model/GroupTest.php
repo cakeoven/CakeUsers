@@ -65,5 +65,4 @@ class GroupTest extends CakeTestCase
     public function testParentNode()
     {
     }
-
 }

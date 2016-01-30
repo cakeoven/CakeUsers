@@ -170,5 +170,4 @@ class UsersControllerTest extends ControllerTestCase
         $this->testAction('users/change_password');
 
     }
-
 }

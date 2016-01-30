@@ -11,5 +11,4 @@ echo $this->Html->link([
         $user['User']['id'],
         $user['User']['token_email'],
         'full_base' => true,
-    ]
-);
+    ]);

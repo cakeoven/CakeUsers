@@ -6,8 +6,7 @@ App::uses('UsersAppController', 'Users.Controller');
  * Groups Controller
  *
  * @property    Group $Group
- * @package        Plugins
- * @subpackage     Users.Controllers
+ * @package Users
  */
 class GroupsController extends UsersAppController
 {
@@ -86,7 +85,7 @@ class GroupsController extends UsersAppController
         if ($this->request->is('post')) {
             $this->Group->create();
             if ($this->Group->save($this->request->data)) {
-                return $this->redirect(array('action' => 'index'));
+                return $this->redirect(['action' => 'index']);
             } else {
                 $this->Session->setFlash(__('The group could not be saved. Please, try again.'));
             }
@@ -107,7 +106,7 @@ class GroupsController extends UsersAppController
         }
         if ($this->request->is('post') || $this->request->is('put')) {
             if ($this->Group->save($this->request->data)) {
-                return $this->redirect(array('action' => 'index'));
+                return $this->redirect(['action' => 'index']);
             } else {
                 $this->Session->setFlash(__('The group could not be saved. Please, try again.'));
             }
@@ -135,5 +134,4 @@ class GroupsController extends UsersAppController
         }
         $this->autoRender = false;
     }
-
 }

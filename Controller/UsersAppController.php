@@ -17,5 +17,4 @@ class UsersAppController extends AppController
      * @var string $plugin
      */
     public $plugin = 'Users';
-
 }

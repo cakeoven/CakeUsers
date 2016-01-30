@@ -123,5 +123,4 @@ class LoginsControllerTest extends ControllerTestCase
     public function testAdminDelete()
     {
     }
-
 }

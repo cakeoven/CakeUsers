@@ -9,11 +9,13 @@
             <th><?php echo __('Phones'); ?></th>
             <th><?php echo __('Actions'); ?></th>
         </tr>
-        <?php foreach ($users as $user): ?>
+        <?php foreach ($users as $user) : ?>
             <tr>
                 <td><?php echo h($user['User']['username']); ?></td>
-                <td><?php echo $this->Html->link($user['Group']['name'],
-                        ['controller' => 'groups', 'action' => 'view', $user['Group']['id']]); ?></td>
+                <td><?php echo $this->Html->link(
+                    $user['Group']['name'],
+                    ['controller' => 'groups', 'action' => 'view', $user['Group']['id']]
+                ); ?></td>
                 <td><?php echo h($user['User']['firstname']); ?>&nbsp;</td>
                 <td><?php echo h($user['User']['lastname']); ?>&nbsp;</td>
                 <td><?php echo $this->Text->autoLinkEmails($user['User']['email']) ?></td>

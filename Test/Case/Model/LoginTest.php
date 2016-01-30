@@ -56,5 +56,4 @@ class LoginTest extends CakeTestCase
 
         parent::tearDown();
     }
-
 }

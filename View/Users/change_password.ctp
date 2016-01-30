@@ -1,5 +1,8 @@
-<?php $this->Html->addCrumb($this->Html->link(__('Users'), ['action' => 'index'],
-    ['icon' => ['class' => 'icon icon-user icon-fw']])); ?>
+<?php $this->Html->addCrumb($this->Html->link(
+    __('Users'),
+    ['action' => 'index'],
+    ['icon' => ['class' => 'icon icon-user icon-fw']]
+)); ?>
 <?php $this->Html->addCrumb(__('Change Password')); ?>
 
 <div class="row">

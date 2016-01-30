@@ -93,6 +93,4 @@ nb-configuration.xml
 /tags
 =======
 build
-composer.lock
 docs
-vendor

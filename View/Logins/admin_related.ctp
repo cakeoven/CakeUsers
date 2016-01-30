@@ -7,7 +7,7 @@
             <th><?php echo __('modified'); ?></th>
             <th><?php echo __('Actions'); ?></th>
         </tr>
-        <?php foreach ($logins as $login): ?>
+        <?php foreach ($logins as $login) : ?>
             <tr>
                 <td><?php echo h($login['Login']['id']); ?>&nbsp;</td>
                 <td><?php echo h($login['Login']['browser']); ?>&nbsp;</td>

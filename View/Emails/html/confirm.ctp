@@ -8,16 +8,14 @@
  * @copyright Copyright 2010 - 2013, Cake Development Corporation (http://cakedc.com)
  * @license   MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
-echo __('Hello %s,', $user['User']['username']);
-echo "\n";
-echo __('to validate your account, you must visit the URL below within 24 hours');
-echo "\n";
-echo $this->Html->link(array(
-        'admin' => false,
-        'controller' => 'users',
-        'action' => 'confirm',
-        $user['User']['id'],
-        $user['User']['token_email'],
-        'full_base' => true
-    )
-);
+?>
+<?= __('Hello %s,', $user['User']['username']) . "\n"; ?>
+<?= __('to validate your account, you must visit the URL below within 24 hours') . "\n"; ?>
+<?= $this->Html->link([
+    'admin' => false,
+    'controller' => 'users',
+    'action' => 'confirm',
+    $user['User']['id'],
+    $user['User']['token_email'],
+    'full_base' => true,
+]);

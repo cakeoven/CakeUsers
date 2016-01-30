@@ -19,5 +19,6 @@ echo Router::url(
         'action' => 'verify',
         $user['User']['id'],
         $user['User']['email_token'],
-    ], true
+    ],
+    true
 );

@@ -14,14 +14,16 @@
             <th><?= __('Updated'); ?></th>
             <th><?= __('Actions'); ?></th>
         </tr>
-        <?php foreach ($users as $user): ?>
+        <?php foreach ($users as $user) : ?>
             <tr>
                 <td><?= h($user['User']['id']); ?></td>
                 <td><?= $this->Html->status($user['User']['active']); ?></td>
                 <td><?= $this->Html->status($user['User']['verified']); ?></td>
                 <td><?= h($user['User']['username']); ?></td>
-                <td><?= $this->Html->link($user['Group']['name'],
-                        array('controller' => 'groups', 'action' => 'view', $user['Group']['id'])); ?></td>
+                <td><?= $this->Html->link(
+                    $user['Group']['name'],
+                    array('controller' => 'groups', 'action' => 'view', $user['Group']['id'])
+                ); ?></td>
                 <td><?= h($user['User']['firstname']); ?>&nbsp;</td>
                 <td><?= h($user['User']['lastname']); ?>&nbsp;</td>
                 <td><?= $this->Text->autoLinkEmails($user['User']['email']) ?></td>

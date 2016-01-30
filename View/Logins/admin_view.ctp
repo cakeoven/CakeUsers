@@ -8,8 +8,10 @@
         </dd>
         <dt><?php echo __('User'); ?></dt>
         <dd>
-            <?php echo $this->Html->link($login['User']['fullname'],
-                array('controller' => 'users', 'action' => 'view', $login['User']['id'])); ?>
+            <?php echo $this->Html->link(
+                $login['User']['fullname'],
+                array('controller' => 'users', 'action' => 'view', $login['User']['id'])
+            ); ?>
             &nbsp;
         </dd>
         <dt><?php echo __('Browser'); ?></dt>

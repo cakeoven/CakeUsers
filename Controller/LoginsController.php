@@ -14,12 +14,11 @@ class LoginsController extends UsersAppController
 
     /**
      * Show the related data
-
      */
     public function related()
     {
         $query = $this->request->params['named'];
-        $this->set('logins', $this->Login->find('all', array('conditions' => $query)));
+        $this->set('logins', $this->Login->find('all', ['conditions' => $query]));
     }
 
     /**
@@ -53,13 +52,13 @@ class LoginsController extends UsersAppController
         if ($this->request->is('ajax')) {
             return $this->redirect($this->referer());
         }
-        return $this->redirect(array('action' => 'index'));
+        return $this->redirect(['action' => 'index']);
     }
 
     /**
      * admin delete all the logins method
      *
-     * @return type
+     * @return void
      * @throws NotFoundException
      */
     public function admin_deleteAll()
@@ -75,17 +74,15 @@ class LoginsController extends UsersAppController
         if ($this->request->is('ajax')) {
             return $this->redirect($this->referer());
         }
-        return $this->redirect(array('action' => 'index'));
+        return $this->redirect(['action' => 'index']);
     }
 
     /**
      * admin related method
-
      */
     public function admin_related()
     {
         $query = $this->request->params['named'];
-        $this->set('logins', $this->Login->find('all', array('conditions' => $query)));
+        $this->set('logins', $this->Login->find('all', ['conditions' => $query]));
     }
-
 }

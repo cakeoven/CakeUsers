@@ -5,8 +5,7 @@ App::uses('AppModel', 'Model');
 /**
  * Users App Model
  *
- * @package    Plugins
- * @subpackage Users.Models
+ * @package CakeUsers
  */
 class UsersAppModel extends AppModel
 {
@@ -17,5 +16,4 @@ class UsersAppModel extends AppModel
      * @var string $plugin
      */
     public $plugin = 'Users';
-
 }

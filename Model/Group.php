@@ -5,7 +5,7 @@ App::uses('UsersAppModel', 'Users.Model');
 /**
  * Group Model
  *
- * @property Group  $Group
+ * @property Group $Group
  * @package    Plugins
  * @subpackage Users.Models
  */
@@ -17,9 +17,9 @@ class Group extends UsersAppModel
      *
      * @var array
      */
-    public $actsAs = array(
-        'Acl' => array('type' => 'requester')
-    );
+    public $actsAs = [
+        'Acl' => ['type' => 'requester'],
+    ];
 
     /**
      * Display field
@@ -33,47 +33,47 @@ class Group extends UsersAppModel
      *
      * @var array
      */
-    public $virtualFields = array(
+    public $virtualFields = [
         'time_created' => "DATE_FORMAT(Group.created, '%H:%i')",
         'time_updated' => "DATE_FORMAT(Group.updated, '%H:%i')",
         'date_created' => "DATE_FORMAT(Group.created, '%Y-%m-%d')",
         'date_updated' => "DATE_FORMAT(Group.updated, '%Y-%m-%d')",
-    );
+    ];
 
     /**
      * Validation rules
      *
      * @var array
      */
-    public $validate = array(
-        'name' => array(
-            'notempty' => array(
-                'rule' => array('notempty'),
-            ),
-            'unique' => array(
-                'rule' => array('isUnique'),
-                'message' => 'This group must be unique.'
-            )
-        ),
-        'created' => array(
-            'datetime' => array(
-                'rule' => array('datetime'),
-            ),
-        ),
-        'updated' => array(
-            'datetime' => array(
-                'rule' => array('datetime'),
-            )
-        )
-    );
+    public $validate = [
+        'name' => [
+            'notempty' => [
+                'rule' => ['notempty'],
+            ],
+            'unique' => [
+                'rule' => ['isUnique'],
+                'message' => 'This group must be unique.',
+            ],
+        ],
+        'created' => [
+            'datetime' => [
+                'rule' => ['datetime'],
+            ],
+        ],
+        'updated' => [
+            'datetime' => [
+                'rule' => ['datetime'],
+            ],
+        ],
+    ];
 
     /**
      * hasMany associations
      *
      * @var array
      */
-    public $hasMany = array(
-        'User' => array(
+    public $hasMany = [
+        'User' => [
             'className' => 'Users.User',
             'foreignKey' => 'group_id',
             'dependent' => false,
@@ -84,9 +84,9 @@ class Group extends UsersAppModel
             'offset' => '',
             'exclusive' => '',
             'finderQuery' => '',
-            'counterQuery' => ''
-        )
-    );
+            'counterQuery' => '',
+        ],
+    ];
 
     /**
      * @return null
@@ -95,5 +95,4 @@ class Group extends UsersAppModel
     {
         return null;
     }
-
 }

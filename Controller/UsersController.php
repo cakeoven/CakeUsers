@@ -24,7 +24,14 @@ class UsersController extends UsersAppController
         parent::beforeFilter();
         //Allow the guest user to register and login
         $this->Auth->allow(
-            'register', 'login', 'logout', 'confirm', 'confirmResend', 'requestPassword', 'newPassword', 'resetPassword'
+            'register',
+            'login',
+            'logout',
+            'confirm',
+            'confirmResend',
+            'requestPassword',
+            'newPassword',
+            'resetPassword'
         );
     }
 
@@ -246,7 +253,6 @@ class UsersController extends UsersAppController
         }
         $this->set('users', $this->User->find('all', ['conditions' => $query]));
     }
-
 
     /**
      * register method
@@ -507,5 +513,4 @@ class UsersController extends UsersAppController
         $Email->emailFormat('html');
         $Email->send();
     }
-
 }

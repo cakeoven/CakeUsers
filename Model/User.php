@@ -9,8 +9,7 @@ App::uses('UsersAppModel', 'Users.Model');
  * @property Task   $Task
  * @property DayOff $DayOff
  * @property Login  $Login
- * @package    Plugins
- * @subpackage Users.Models
+ * @package CakeUsers
  * @method findByEmail($email)
  */
 class User extends UsersAppModel
@@ -513,5 +512,4 @@ class User extends UsersAppModel
         }
         return true;
     }
-
 }

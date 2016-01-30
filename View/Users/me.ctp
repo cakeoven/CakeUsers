@@ -1,13 +1,19 @@
-<?php $this->Html->addCrumb($this->Html->link(__('Users'), array('action' => 'index'),
-    array('icon' => array('class' => 'icon icon-users icon-fw')))); ?>
+<?php $this->Html->addCrumb($this->Html->link(
+    __('Users'),
+    array('action' => 'index'),
+    array('icon' => array('class' => 'icon icon-users icon-fw'))
+)); ?>
 <?php $this->Html->addCrumb(__('Personal')); ?>
 <div class="row">
     <div class="col-sm-2">
         <div class="list-group">
             <?php echo $this->Element->listItemLinkAdd(); ?>
             <?php echo $this->Element->listItemLinkEdit($user['User']['id']); ?>
-            <?php echo $this->Html->link(__('Renew Token'), array('action' => 'renewToken', $user['User']['id']),
-                array('class' => 'list-group-item', 'icon' => array('class' => 'icon icon-refresh icon-fw'))); ?>
+            <?php echo $this->Html->link(
+                __('Renew Token'),
+                array('action' => 'renewToken', $user['User']['id']),
+                array('class' => 'list-group-item', 'icon' => array('class' => 'icon icon-refresh icon-fw'))
+            ); ?>
         </div>
     </div>
     <div class="col-sm-10">
@@ -20,8 +26,10 @@
                     </dd>
                     <dt><?php echo __('Group'); ?></dt>
                     <dd>
-                        <?php echo $this->Html->link($user['Group']['name'],
-                            array('controller' => 'groups', 'action' => 'view', $user['Group']['id'])); ?>
+                        <?php echo $this->Html->link(
+                            $user['Group']['name'],
+                            array('controller' => 'groups', 'action' => 'view', $user['Group']['id'])
+                        ); ?>
                     </dd>
                     <dt><?php echo __('Firstname'); ?></dt>
                     <dd>
@@ -54,8 +62,11 @@
     </div>
 </div>
 <ul class="nav nav-tabs">
-    <li class="active"><?php echo $this->Html->link(__('Logins'), '#related-logins',
-            array("data-toggle" => "tab")) ?></li>
+    <li class="active"><?php echo $this->Html->link(
+        __('Logins'),
+        '#related-logins',
+        array("data-toggle" => "tab")
+    ) ?></li>
 </ul>
 <div class="tab-content">
     <div id="related-logins" class="tab-pane active">

@@ -1,5 +1,8 @@
-<?php $this->Html->addCrumb($this->Html->link(__('Groups'), array('action' => 'index'),
-    array('icon' => array('class' => 'icon icon-users icon-fw')))); ?>
+<?php $this->Html->addCrumb($this->Html->link(
+    __('Groups'),
+    array('action' => 'index'),
+    array('icon' => array('class' => 'icon icon-users icon-fw'))
+)); ?>
 <?php $this->Html->addCrumb(__('Edit')); ?>
 <?php $this->Html->addCrumb($this->request->data('Group.id')); ?>
 

@@ -1,5 +1,8 @@
-<?php $this->Html->addCrumb($this->Html->link(__('Groups'), array('action' => 'index'),
-    array('icon' => array('class' => 'icon icon-users icon-fw')))); ?>
+<?php $this->Html->addCrumb($this->Html->link(
+    __('Groups'),
+    array('action' => 'index'),
+    array('icon' => array('class' => 'icon icon-users icon-fw'))
+)); ?>
 <div class="row">
     <div class="col-sm-3 col-md-2">
         <div class="list-group">
@@ -35,9 +38,11 @@
             </dd>
         </dl>
         <ul class="nav nav-tabs nav-tabs-remote">
-            <li class="active"><?php echo $this->Html->link(__('Users'),
-                    array('controller' => 'users', 'action' => 'related', 'group_id' => $group['Group']['id']),
-                    array('data-toggle' => 'tab', 'data-target' => '#tab-group-related')) ?></li>
+            <li class="active"><?php echo $this->Html->link(
+                __('Users'),
+                array('controller' => 'users', 'action' => 'related', 'group_id' => $group['Group']['id']),
+                array('data-toggle' => 'tab', 'data-target' => '#tab-group-related')
+            ) ?></li>
         </ul>
         <div class="tab-content">
             <div id="tab-group-related" class="tab-pane active"></div>

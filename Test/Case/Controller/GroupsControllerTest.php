@@ -96,5 +96,4 @@ class GroupsControllerTest extends ControllerTestCase
     public function testAdminDelete()
     {
     }
-
 }

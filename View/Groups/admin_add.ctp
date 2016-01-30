@@ -1,5 +1,8 @@
-<?php $this->Html->addCrumb($this->Html->link(__('Groups'), ['action' => 'index'],
-    ['icon' => ['class' => 'icon icon-users icon-fw']])); ?>
+<?php $this->Html->addCrumb($this->Html->link(
+    __('Groups'),
+    ['action' => 'index'],
+    ['icon' => ['class' => 'icon icon-users icon-fw']]
+)); ?>
 <?php $this->Html->addCrumb(__('Create')); ?>
 <?php echo $this->Form->create('Group'); ?>
     <div class="row">
