@@ -36,7 +36,6 @@ $RECYCLE.BIN/
 Icon?
 
 ## CakePHP 2
-
 tmp/*
 [Cc]onfig/email.php
 [Cc]onfig/core.php
@@ -47,6 +46,8 @@ app/[Cc]onsole/*
 app/[Cc]onfig/core.php
 app/[Cc]onfig/database.php
 app/[Cc]onfig/email.php
+/[Pp]lugin
+/[Pp]lugins
 /[Vv]endor
 /[Vv]endors
 

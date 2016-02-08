@@ -5,9 +5,9 @@ App::uses('UsersAppModel', 'Users.Model');
 /**
  * Group Model
  *
+ * @package Users
  * @property Group $Group
- * @package    Plugins
- * @subpackage Users.Models
+ * @method findById($id)
  */
 class Group extends UsersAppModel
 {

@@ -5,12 +5,11 @@ App::uses('UsersAppModel', 'Users.Model');
 /**
  * User Model
  *
- * @property Group  $Group
- * @property Task   $Task
- * @property DayOff $DayOff
- * @property Login  $Login
- * @package CakeUsers
+ * @package Users
+ * @property Group $Group
+ * @property Login $Login
  * @method findByEmail($email)
+ * @method findById($id)
  */
 class User extends UsersAppModel
 {
@@ -259,23 +258,24 @@ class User extends UsersAppModel
     /**
      * parentNode method
      *
-     * @return null
+     * @return array|null
      */
     public function parentNode()
     {
         if (!$this->id && empty($this->data)) {
             return null;
         }
-        if (isset($this->data['User']['group_id'])) {
-            $groupId = $this->data['User']['group_id'];
+        if (isset($this->data[$this->alias]['group_id'])) {
+            $groupId = $this->data[$this->alias]['group_id'];
         } else {
             $groupId = $this->field('group_id');
         }
+
         if (!$groupId) {
             return null;
-        } else {
-            return ['Users.Group' => ['id' => $groupId]];
         }
+
+        return ['Users.Group' => ['id' => $groupId]];
     }
 
     /**
@@ -287,7 +287,8 @@ class User extends UsersAppModel
      */
     public function bindNode($user)
     {
-        return ['model' => 'Users.Group', 'foreign_key' => $user['Users.User']['group_id']];
+        $alias = $this->alias;
+        return ['model' => "$alias.Group", 'foreign_key' => $user["$alias.User"]['group_id']];
     }
 
     /**
@@ -479,6 +480,9 @@ class User extends UsersAppModel
 
     /**
      * beforeRegister method
+     *
+     * @param array $data
+     * @return array
      */
     public function beforeRegister(array $data = [])
     {
@@ -500,7 +504,7 @@ class User extends UsersAppModel
      * @param array $options
      * @return bool
      */
-    public function afterLogin($data = [], $options = [])
+    public function afterLogin(array $data = [], array $options = [])
     {
         $this->Login->create();
         if (!$this->Login->save($data)) {

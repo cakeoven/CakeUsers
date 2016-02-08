@@ -6,9 +6,8 @@ App::uses('UsersAppController', 'Users.Controller');
 /**
  * Users Controller
  *
- * @property    User $User
- * @package        Plugins
- * @subpackage     Users.Controllers
+ * @property User $User
+ * @package Users
  */
 class UsersController extends UsersAppController
 {
@@ -133,9 +132,8 @@ class UsersController extends UsersAppController
         if ($this->request->is('post') || $this->request->is('put')) {
             if ($this->User->save($this->request->data)) {
                 return $this->redirect(['action' => 'index']);
-            } else {
-                $this->Flash->danger(__('The user could not be saved. Please, try again.'));
             }
+            $this->Flash->danger(__('The user could not be saved. Please, try again.'));
         } else {
             $this->request->data = $this->User->findById($id);
         }

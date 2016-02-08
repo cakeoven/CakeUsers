@@ -2,8 +2,7 @@
 /**
  * Routes configuration
  *
- * @package        Plugins
- * @subpackage     Users.Config
+ * @package Users
  */
 Router::connect('/login', [
     'plugin' => 'users',

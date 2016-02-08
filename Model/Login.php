@@ -34,25 +34,16 @@ class Login extends UsersAppModel
         'user_id' => [
             'numeric' => [
                 'rule' => ['numeric'],
-                //'message' => 'Your custom message here',
-                //'allowEmpty' => false,
-                //'required' => false,
             ],
         ],
         'browser' => [
             'notEmpty' => [
                 'rule' => ['notEmpty'],
-                //'message' => 'Your custom message here',
-                //'allowEmpty' => false,
-                //'required' => false,
             ],
         ],
         'IP' => [
             'notEmpty' => [
                 'rule' => ['notEmpty'],
-                //'message' => 'Your custom message here',
-                //'allowEmpty' => false,
-                //'required' => false,
             ],
         ],
     ];

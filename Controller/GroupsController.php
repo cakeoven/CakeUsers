@@ -5,7 +5,7 @@ App::uses('UsersAppController', 'Users.Controller');
 /**
  * Groups Controller
  *
- * @property    Group $Group
+ * @property Group $Group
  * @package Users
  */
 class GroupsController extends UsersAppController
@@ -104,9 +104,8 @@ class GroupsController extends UsersAppController
         if ($this->request->is('post') || $this->request->is('put')) {
             if ($this->Group->save($this->request->data)) {
                 return $this->redirect(['action' => 'index']);
-            } else {
-                $this->Flash->error(__('The group could not be saved. Please, try again.'));
             }
+            $this->Flash->error(__('The group could not be saved. Please, try again.'));
         } else {
             $this->request->data = $this->Group->findById($id);
         }

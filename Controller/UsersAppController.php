@@ -3,11 +3,15 @@
 /**
  * Users App Controller
  *
- * @package        Plugins
- * @subpackage     Users.Controllers
+ * @package Users
  */
 App::uses('AppController', 'Controller');
 
+/**
+ * Class UsersAppController
+ *
+ * @property BootstrapFlashComponent $Flash
+ */
 class UsersAppController extends AppController
 {
 

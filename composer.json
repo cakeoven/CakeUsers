@@ -21,6 +21,7 @@
     "php": ">=5.3.0",
     "ext-mcrypt": "*",
     "cakephp/cakephp": "2.7.*",
+    "cakeoven/cakebootstrap": "2.*",
     "composer/installers": "*"
   },
   "require-dev": {
